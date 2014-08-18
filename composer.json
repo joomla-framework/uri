@@ -9,9 +9,13 @@
         "php": ">=5.3.10"
     },
     "autoload": {
-    	"psr-4": {
-    		"Joomla\\Uri\\": "src/",
+        "psr-4": {
+            "Joomla\\Uri\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
             "Joomla\\Uri\\Tests\\": "Tests/"
-    	}
+        }
     }
 }
