@@ -355,14 +355,10 @@ abstract class AbstractUri implements UriInterface
 			$parts['query'] = str_replace('&amp;', '&', $parts['query']);
 		}
 
-		$this->scheme   = isset($parts['scheme']) ? $parts['scheme'] : null;
-		$this->user     = isset($parts['user']) ? $parts['user'] : null;
-		$this->pass     = isset($parts['pass']) ? $parts['pass'] : null;
-		$this->host     = isset($parts['host']) ? $parts['host'] : null;
-		$this->port     = isset($parts['port']) ? $parts['port'] : null;
-		$this->path     = isset($parts['path']) ? $parts['path'] : null;
-		$this->query    = isset($parts['query']) ? $parts['query'] : null;
-		$this->fragment = isset($parts['fragment']) ? $parts['fragment'] : null;
+		foreach ($parts as $key => $value)
+		{
+			$this->$key = $value;
+		}
 
 		// Parse the query
 		if (isset($parts['query']))
