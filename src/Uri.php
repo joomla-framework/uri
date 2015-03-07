@@ -93,13 +93,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $scheme  The URI scheme.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setScheme($scheme)
 	{
 		$this->scheme = $scheme;
+
+		return $this;
 	}
 
 	/**
@@ -107,13 +109,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $user  The URI username.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setUser($user)
 	{
 		$this->user = $user;
+
+		return $this;
 	}
 
 	/**
@@ -121,13 +125,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $pass  The URI password.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setPass($pass)
 	{
 		$this->pass = $pass;
+
+		return $this;
 	}
 
 	/**
@@ -135,13 +141,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $host  The URI host.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setHost($host)
 	{
 		$this->host = $host;
+
+		return $this;
 	}
 
 	/**
@@ -149,13 +157,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   integer  $port  The URI port number.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setPort($port)
 	{
 		$this->port = $port;
+
+		return $this;
 	}
 
 	/**
@@ -163,13 +173,15 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $path  The URI path string.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setPath($path)
 	{
 		$this->path = $this->cleanPath($path);
+
+		return $this;
 	}
 
 	/**
@@ -177,12 +189,14 @@ class Uri extends AbstractUri
 	 *
 	 * @param   string  $anchor  The URI anchor string.
 	 *
-	 * @return  void
+	 * @return  Uri  This method supports chaining.
 	 *
 	 * @since   1.0
 	 */
 	public function setFragment($anchor)
 	{
 		$this->fragment = $anchor;
+
+		return $this;
 	}
 }
