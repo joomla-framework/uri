@@ -11,14 +11,14 @@ namespace Joomla\Uri;
 /**
  * Uri Interface
  *
- * Interface for read-only access to Uris.
+ * Interface for read-only access to URIs.
  *
  * @since  1.0
  */
 interface UriInterface
 {
 	/**
-	 * Magic method to get the string representation of the URI object.
+	 * Magic method to get the string representation of the UriInterface object.
 	 *
 	 * @return  string
 	 *
@@ -27,7 +27,7 @@ interface UriInterface
 	public function __toString();
 
 	/**
-	 * Returns full uri string.
+	 * Returns full URI string.
 	 *
 	 * @param   array  $parts  An array specifying the parts to render.
 	 *
@@ -72,8 +72,7 @@ interface UriInterface
 	public function getQuery($toArray = false);
 
 	/**
-	 * Get URI scheme (protocol)
-	 * ie. http, https, ftp, etc...
+	 * Get the URI scheme (protocol)
 	 *
 	 * @return  string  The URI scheme.
 	 *
@@ -82,47 +81,43 @@ interface UriInterface
 	public function getScheme();
 
 	/**
-	 * Get URI username
-	 * Returns the username, or null if no username was specified.
+	 * Get the URI username
 	 *
-	 * @return  string  The URI username.
+	 * @return  string  The username, or null if no username was specified.
 	 *
 	 * @since   1.0
 	 */
 	public function getUser();
 
 	/**
-	 * Get URI password
-	 * Returns the password, or null if no password was specified.
+	 * Get the URI password
 	 *
-	 * @return  string  The URI password.
+	 * @return  string  The password, or null if no password was specified.
 	 *
 	 * @since   1.0
 	 */
 	public function getPass();
 
 	/**
-	 * Get URI host
-	 * Returns the hostname/ip or null if no hostname/ip was specified.
+	 * Get the URI host
 	 *
-	 * @return  string  The URI host.
+	 * @return  string  The hostname/IP or null if no hostname/IP was specified.
 	 *
 	 * @since   1.0
 	 */
 	public function getHost();
 
 	/**
-	 * Get URI port
-	 * Returns the port number, or null if no port was specified.
+	 * Get the URI port
 	 *
-	 * @return  integer  The URI port number.
+	 * @return  integer  The port number, or null if no port was specified.
 	 *
 	 * @since   1.0
 	 */
 	public function getPort();
 
 	/**
-	 * Gets the URI path string.
+	 * Gets the URI path string
 	 *
 	 * @return  string  The URI path string.
 	 *
@@ -132,7 +127,6 @@ interface UriInterface
 
 	/**
 	 * Get the URI archor string
-	 * Everything after the "#".
 	 *
 	 * @return  string  The URI anchor string.
 	 *

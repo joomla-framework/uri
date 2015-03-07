@@ -11,16 +11,14 @@ namespace Joomla\Uri;
 /**
  * Uri Class
  *
- * This class parses a URI and provides a common interface for the Joomla Framework
- * to access and manipulate a URI.
+ * This class parses a URI and provides a common interface for the Joomla Framework to access and manipulate a URI.
  *
  * @since  1.0
  */
 class Uri extends AbstractUri
 {
 	/**
-	 * Adds a query variable and value, replacing the value if it
-	 * already exists and returning the old value.
+	 * Adds a query variable and value, replacing the value if it already exists and returning the old value
 	 *
 	 * @param   string  $name   Name of the query variable to set.
 	 * @param   string  $value  Value of the query variable.
@@ -42,7 +40,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Removes an item from the query string variables if it exists.
+	 * Removes an item from the query string variables if it exists
 	 *
 	 * @param   string  $name  Name of variable to remove.
 	 *
@@ -62,10 +60,9 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Sets the query to a supplied string in format:
-	 * foo=bar&x=y
+	 * Sets the query to a supplied string in format foo=bar&x=y
 	 *
-	 * @param   mixed  $query  The query string or array.
+	 * @param   array|string  $query  The query string or array.
 	 *
 	 * @return  void
 	 *
@@ -92,8 +89,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set URI scheme (protocol)
-	 * ie. http, https, ftp, etc...
+	 * Set the URI scheme (protocol)
 	 *
 	 * @param   string  $scheme  The URI scheme.
 	 *
@@ -107,7 +103,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set URI username.
+	 * Set the URI username
 	 *
 	 * @param   string  $user  The URI username.
 	 *
@@ -121,7 +117,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set URI password.
+	 * Set the URI password
 	 *
 	 * @param   string  $pass  The URI password.
 	 *
@@ -135,7 +131,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set URI host.
+	 * Set the URI host
 	 *
 	 * @param   string  $host  The URI host.
 	 *
@@ -149,7 +145,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set URI port.
+	 * Set the URI port
 	 *
 	 * @param   integer  $port  The URI port number.
 	 *
@@ -163,7 +159,7 @@ class Uri extends AbstractUri
 	}
 
 	/**
-	 * Set the URI path string.
+	 * Set the URI path string
 	 *
 	 * @param   string  $path  The URI path string.
 	 *
@@ -178,7 +174,6 @@ class Uri extends AbstractUri
 
 	/**
 	 * Set the URI anchor string
-	 * everything after the "#".
 	 *
 	 * @param   string  $anchor  The URI anchor string.
 	 *
