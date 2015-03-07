@@ -144,6 +144,21 @@ class UriTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
+	 * Test the parse method.
+	 *
+	 * @return  void
+	 *
+	 * @since   1.0
+	 * @covers  Joomla\Uri\Uri::parse
+	 * @covers  Joomla\Uri\Uri::__construct
+	 * @expectedException  \RuntimeException
+	 */
+	public function testParseForBadUrl()
+	{
+		new Uri('http:///www.example.com');
+	}
+
+	/**
 	 * Test the toString method.
 	 *
 	 * @return  void
