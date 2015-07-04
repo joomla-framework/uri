@@ -112,31 +112,31 @@ abstract class AbstractUri implements UriInterface
 		}
 	}
 
-    /**
-     * Return the string representation as a URI reference.
-     *
-     * Depending on which components of the URI are present, the resulting
-     * string is either a full URI or relative reference according to RFC 3986,
-     * Section 4.1. The method concatenates the various components of the URI,
-     * using the appropriate delimiters:
-     *
-     * - If a scheme is present, it MUST be suffixed by ":".
-     * - If an authority is present, it MUST be prefixed by "//".
-     * - The path can be concatenated without delimiters. But there are two
-     *   cases where the path has to be adjusted to make the URI reference
-     *   valid as PHP does not allow to throw an exception in __toString():
-     *     - If the path is rootless and an authority is present, the path MUST
-     *       be prefixed by "/".
-     *     - If the path is starting with more than one "/" and no authority is
-     *       present, the starting slashes MUST be reduced to one.
-     * - If a query is present, it MUST be prefixed by "?".
-     * - If a fragment is present, it MUST be prefixed by "#".
-     *
-     * @see http://tools.ietf.org/html/rfc3986#section-4.1
-     * @return  string
+	/**
+	 * Return the string representation as a URI reference.
+	 *
+	 * Depending on which components of the URI are present, the resulting
+	 * string is either a full URI or relative reference according to RFC 3986,
+	 * Section 4.1. The method concatenates the various components of the URI,
+	 * using the appropriate delimiters:
+	 *
+	 * - If a scheme is present, it MUST be suffixed by ":".
+	 * - If an authority is present, it MUST be prefixed by "//".
+	 * - The path can be concatenated without delimiters. But there are two
+	 *   cases where the path has to be adjusted to make the URI reference
+	 *   valid as PHP does not allow to throw an exception in __toString():
+	 *     - If the path is rootless and an authority is present, the path MUST
+	 *       be prefixed by "/".
+	 *     - If the path is starting with more than one "/" and no authority is
+	 *       present, the starting slashes MUST be reduced to one.
+	 * - If a query is present, it MUST be prefixed by "?".
+	 * - If a fragment is present, it MUST be prefixed by "#".
+	 *
+	 * @see http://tools.ietf.org/html/rfc3986#section-4.1
+	 * @return  string
 	 *
 	 * @since   1.0
-     */
+	 */
 	public function __toString()
 	{
 		return $this->toString();
@@ -452,24 +452,24 @@ abstract class AbstractUri implements UriInterface
 		return $this->path;
 	}
 
-    /**
-     * Retrieve the fragment component of the URI.
-     *
-     * If no fragment is present, this method MUST return an empty string.
-     *
-     * The leading "#" character is not part of the fragment and MUST NOT be
-     * added.
-     *
-     * The value returned MUST be percent-encoded, but MUST NOT double-encode
-     * any characters. To determine what characters to encode, please refer to
-     * RFC 3986, Sections 2 and 3.5.
-     *
-     * @see https://tools.ietf.org/html/rfc3986#section-2
-     * @see https://tools.ietf.org/html/rfc3986#section-3.5
-     * @return  string  The URI fragment.
-     *
-     * @since   1.0
-     */
+	/**
+	 * Retrieve the fragment component of the URI.
+	 *
+	 * If no fragment is present, this method MUST return an empty string.
+	 *
+	 * The leading "#" character is not part of the fragment and MUST NOT be
+	 * added.
+	 *
+	 * The value returned MUST be percent-encoded, but MUST NOT double-encode
+	 * any characters. To determine what characters to encode, please refer to
+	 * RFC 3986, Sections 2 and 3.5.
+	 *
+	 * @see https://tools.ietf.org/html/rfc3986#section-2
+	 * @see https://tools.ietf.org/html/rfc3986#section-3.5
+	 * @return  string  The URI fragment.
+	 *
+	 * @since   1.0
+	 */
 	public function getFragment()
 	{
 		return $this->fragment;
