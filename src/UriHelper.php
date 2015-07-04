@@ -18,6 +18,17 @@ namespace Joomla\Uri;
 class UriHelper
 {
 	/**
+	 * Array indexed by valid scheme names to their corresponding ports.
+	 *
+	 * @var    int[]
+	 * @since  __DELPOY_VERSION__
+	 */
+	protected static $allowedSchemes = array(
+		'http'  => 80,
+		'https' => 443,
+	);
+
+	/**
 	 * Does a UTF-8 safe version of PHP parse_url function
 	 *
 	 * @param   string  $url  URL to parse
@@ -54,5 +65,45 @@ class UriHelper
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Is the scheme supported by this implementation
+	 *
+	 * @param   string  $scheme  The current scheme
+	 *
+	 * @return  bool
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public static function isSupportedScheme($scheme)
+	{
+		return array_key_exists(strtolower($scheme), static::allowedSchemes);
+	}
+
+	/**
+	 * Is a given port non-standard for the current scheme?
+	 *
+	 * @param   string  $scheme  The current scheme
+	 * @param   int     $port    The port for the current scheme
+	 *
+	 * @return  bool
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public static function isNonStandardPort($scheme, $port)
+	{
+		// If no scheme is present then return false
+		if (empty($scheme))
+		{
+			return true;
+		}
+
+		if (!$port)
+		{
+			return false;
+		}
+
+		return !static::isSupportedScheme($scheme) || $port !== static::allowedSchemes[$scheme];
 	}
 }
