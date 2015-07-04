@@ -144,11 +144,6 @@ class UriImmuteableTest extends \PHPUnit_Framework_TestCase
 			$this->object->getQuery(),
 			$this->equalTo('var=value')
 		);
-
-		$this->assertThat(
-			$this->object->getQuery(true),
-			$this->equalTo(array('var' => 'value'))
-		);
 	}
 
 	/**
