@@ -78,7 +78,7 @@ class UriHelper
 	 */
 	public static function isSupportedScheme($scheme)
 	{
-		return array_key_exists(strtolower($scheme), static::allowedSchemes);
+		return array_key_exists(strtolower($scheme), static::$allowedSchemes);
 	}
 
 	/**
@@ -104,6 +104,6 @@ class UriHelper
 			return false;
 		}
 
-		return !static::isSupportedScheme($scheme) || $port !== static::allowedSchemes[$scheme];
+		return !static::isSupportedScheme($scheme) || $port !== static::$allowedSchemes[$scheme];
 	}
 }
