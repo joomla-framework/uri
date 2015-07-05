@@ -18,7 +18,7 @@ You can use the `Uri` class a number of different ways when dealing with Uris. I
 
 ### PSR-7 Support
 
-[PSR-7](http://www.github.com/php-fig/http-message) is a standard way of dealing with Requests and Responses in HTTP requests defined by the [PHP FIG](http://www.php-fig.org/) of which Joomla is a member. An immutable Url class is one of the interfaces defined as part of this effort.
+[PSR-7](http://www.github.com/php-fig/http-message) provides a set of common interfaces for HTTP messages as described in RFC 7230 and RFC 7231, written by the [PHP FIG](http://www.php-fig.org/) of which Joomla is a member. An immutable Uri class is one of the interfaces defined as part of this effort.
 
 In version __DEPLOY_VERSION__ the UriInterface was made compatible with the getter methods defined in PSR-7.
 
