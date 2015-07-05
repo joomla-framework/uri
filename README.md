@@ -16,8 +16,17 @@ The `UriHelper` class only contains one method parse_url() that's an UTF-8 safe 
 
 You can use the `Uri` class a number of different ways when dealing with Uris. It is very easy to construct a uri programatically using the methods provided in the `Uri` class.
 
+### PSR-7 Support
+
+[PSR-7](http://www.github.com/php-fig/http-message) is a standard way of dealing with Requests and Responses in HTTP requests defined by the [PHP FIG](http://www.php-fig.org/) of which Joomla is a member. An immutable Url class is one of the interfaces defined as part of this effort.
+
+In version __DEPLOY_VERSION__ the UriInterface was made compatible with the getter methods defined in PSR-7.
+
+The UriImmutable class fully implements PSR-7 and can be injected into any PSR-7 compatible application.
+
 
 ### Usage
+#### Uri
 
 The methods provided in the `Uri` class allow you to manipulate all aspects of a uri. For example, suppose you wanted to set a new uri, add in a port, and then also post a username and password to authenticate a .htaccess security file. You could use the following syntax:
 
@@ -58,6 +67,28 @@ $uri->setQuery('foo=bar');
 Output:
 
 `myUser:myPass@http://localhost:8888path/to/file.php?foo=bar`
+
+#### UriImmutable
+If you wish to alter a URL in the UriImmutable class you must create a clone of the class. To do this there are various helper methods defined in PSR-7. We will show in this example how to edit the host associated with a URL. First of all we create our PSR-7 compatible object:
+
+```php
+<?php
+$uri = new Joomla\Uri\Uri('http://www.joomla.org?var1=foo#page1');
+```
+
+to change the host we call the ```withHost``` method:
+
+```php
+<?php
+$newUri = $uri->withHost('http://joomla.com');
+
+echo $uri->__toString();
+echo $newUri->__toString();
+```
+
+Output:
+`http://www.joomla.org?var1=foo#page1`
+`http://www.joomla.com?var1=foo#page1`
 
 ## Installation via Composer
 
