@@ -528,4 +528,65 @@ class UriImmuteableTest extends \PHPUnit_Framework_TestCase
 			'If the new port is the same as the old port then the objects should be clones'
 		);
 	}
+
+	/**
+	 * Tests the withScheme method with the same schema as current.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withScheme
+	 */
+	public function testWithSchemeWithSameScheme()
+	{
+		$newUri = $this->object->withScheme('http');
+
+		$this->assertEquals(
+			$newUri,
+			$this->object,
+			'If the new port is the same as the old port then the objects should be clones'
+		);
+	}
+
+	/**
+	 * Tests the withScheme method with a non-string scheme.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withScheme
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithSchemeWithNonStringScheme()
+	{
+		$this->object->withScheme(array('scheme' => 'https'));
+	}
+
+	/**
+	 * Tests the withScheme method with a different scheme.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withScheme
+	 */
+	public function testWithSchemeWithDifferentScheme()
+	{
+		$newUri = $this->object->withScheme('https');
+
+		// Ensure the original object is unchanged
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		// Ensure the new object is changed correctly
+		$this->assertEquals(
+			$newUri->toString(),
+			'https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
 }

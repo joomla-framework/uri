@@ -84,6 +84,11 @@ final class UriImmutable extends AbstractUri implements PsrInterface
 	 */
 	public function withScheme($scheme)
 	{
+		if (!is_string($scheme))
+		{
+			throw new \InvalidArgumentException('Scheme must be a string');
+		}
+
 		$scheme = strtolower($scheme);
 		$new    = clone $this;
 

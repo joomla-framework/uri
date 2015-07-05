@@ -339,7 +339,7 @@ abstract class AbstractUri implements UriInterface
 			return '';
 		}
 
-		return strtolower($scheme);
+		return $scheme;
 	}
 
 	/**
