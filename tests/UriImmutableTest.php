@@ -282,4 +282,250 @@ class UriImmuteableTest extends \PHPUnit_Framework_TestCase
 			$this->equalTo(false)
 		);
 	}
+
+	/**
+	 * Tests the withPath method with a non-string value.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithPathWithNonStringArgument()
+	{
+		$this->object->withPath(array('path' => '/path/differentFile.html'));
+	}
+
+	/**
+	 * Tests the withPath method with a query appended to the path.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithPathWithQueryProvided()
+	{
+		$this->object->withPath('/path/differentFile.html?var=foo');
+	}
+
+	/**
+	 * Tests the withPath method with a fragment.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithPathWithFragmentProvided()
+	{
+		$this->object->withPath('/path/differentFile.html#fragment');
+	}
+
+	/**
+	 * Tests the withPath method with URL starting with a /.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 */
+	public function testWithPathWithStartingSlash()
+	{
+		$newUri = $this->object->withPath('/path/differentFile.html');
+
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		$this->assertEquals(
+			$newUri->toString(),
+			'http://someuser:somepass@www.example.com:80/path/differentFile.html?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
+
+	/**
+	 * Tests the withPath method with an empty Path.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 */
+	public function testWithPathWithEmptyPath()
+	{
+		$newUri = $this->object->withPath('');
+
+		// Ensure the original object is unchanged
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		// Ensure the new object is changed correctly
+		$this->assertEquals(
+			$newUri->toString(),
+			'http://someuser:somepass@www.example.com:80?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
+
+	/**
+	 * Tests the withPath method with URL starting with the same path.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPath
+	 */
+	public function testWithPathWithSamePath()
+	{
+		$newUri = $this->object->withPath('/path/file.html');
+
+		$this->assertEquals(
+			$newUri,
+			$this->object,
+			'If the new path is the same as the old path then the objects should be clones'
+		);
+	}
+
+	/**
+	 * Tests the withPort method with an integer port.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 */
+	public function testWithPortWithInteger()
+	{
+		$newUri = $this->object->withPort(81);
+
+		// Ensure the original object is unchanged
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		// Ensure the new object is changed correctly
+		$this->assertEquals(
+			$newUri->toString(),
+			'http://someuser:somepass@www.example.com:81/path/file.html?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
+
+	/**
+	 * Tests the withPort method with an string port.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 */
+	public function testWithPortWithStringInteger()
+	{
+		$newUri = $this->object->withPort('81');
+
+		// Ensure the original object is unchanged
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		// Ensure the new object is changed correctly
+		$this->assertEquals(
+			$newUri->toString(),
+			'http://someuser:somepass@www.example.com:81/path/file.html?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
+
+	/**
+	 * Tests the withPort method with an integer port.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 */
+	public function testWithPortWithNull()
+	{
+		$newUri = $this->object->withPort(null);
+
+		// Ensure the original object is unchanged
+		$this->assertEquals(
+			$this->object->toString(),
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			'Original object is different from previously'
+		);
+
+		// Ensure the new object is changed correctly
+		$this->assertEquals(
+			$newUri->toString(),
+			'http://someuser:somepass@www.example.com/path/file.html?var=value#fragment',
+			'New object has incorrect URL'
+		);
+	}
+
+	/**
+	 * Tests the withPort method with a larger than allowed port.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithPortWithLargePortNumber()
+	{
+		$this->object->withPort(65536);
+	}
+
+	/**
+	 * Tests the withPort method with a non-numeric port.
+	 * There should be an invalid argument exception thrown according to PSR-7.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 * @expectedException \InvalidArgumentException
+	 */
+	public function testWithPortWithNonNumericValue()
+	{
+		$this->object->withPort(array('port' => 81));
+	}
+
+	/**
+	 * Tests the withPath method with URL starting with the same path.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\UriImmutable::withPort
+	 */
+	public function testWithPortWithSamePort()
+	{
+		$newUri = $this->object->withPort(80);
+
+		$this->assertEquals(
+			$newUri,
+			$this->object,
+			'If the new port is the same as the old port then the objects should be clones'
+		);
+	}
 }

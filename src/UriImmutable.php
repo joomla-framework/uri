@@ -192,25 +192,29 @@ final class UriImmutable extends AbstractUri implements PsrInterface
 	 */
 	public function withPort($port)
 	{
-		if (!is_numeric($port))
+		// If the port is not null perform sanity checks
+		if ($port !== null)
 		{
-			throw new \InvalidArgumentException(
-				sprintf(
-					'Invalid port specified - you must supply an integer'
-				)
-			);
-		}
+			if (!is_numeric($port))
+			{
+				throw new \InvalidArgumentException(
+					sprintf(
+						'Invalid port specified - you must supply an integer'
+					)
+				);
+			}
 
-		$port = (int) $port;
+			$port = (int) $port;
 
-		if ($port < 1 || $port > 65535)
-		{
-			throw new \InvalidArgumentException(
-				sprintf(
-					'Invalid port "%d" specified - you must supply a valid TCP/UDP port',
-					$port
-				)
-			);
+			if ($port < 1 || $port > 65535)
+			{
+				throw new \InvalidArgumentException(
+					sprintf(
+						'Invalid port "%d" specified - you must supply a valid TCP/UDP port',
+						$port
+					)
+				);
+			}
 		}
 
 		$new  = clone $this;
@@ -251,6 +255,7 @@ final class UriImmutable extends AbstractUri implements PsrInterface
 	 * @since   __DEPLOY_VERSION__
 	 *
 	 * @throws \InvalidArgumentException for invalid paths.
+	 * @todo   Deal with paths not beginning with a slash ("/")
 	 */
 	public function withPath($path)
 	{
