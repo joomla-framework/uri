@@ -16,7 +16,7 @@
     "autoload": {
         "psr-4": {
             "Joomla\\Uri\\": "src/",
-            "Joomla\\Uri\\Tests\\": "Tests/"
+            "Joomla\\Uri\\Tests\\": "tests/"
         }
     },
     "extra": {

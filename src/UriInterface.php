@@ -54,7 +54,7 @@ interface UriInterface
 	 * @param   string  $name     Name of the query variable to get.
 	 * @param   string  $default  Default value to return if the variable is not set.
 	 *
-	 * @return  array   Query variables.
+	 * @return  mixed  Requested query variable if present otherwise the default value.
 	 *
 	 * @since   1.0
 	 */
@@ -65,7 +65,7 @@ interface UriInterface
 	 *
 	 * @param   boolean  $toArray  True to return the query as a key => value pair array.
 	 *
-	 * @return  string   Query string.
+	 * @return  array|string   Query string, optionally as an array.
 	 *
 	 * @since   1.0
 	 */
