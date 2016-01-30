@@ -1,6 +1,6 @@
 <?php
 /**
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -264,26 +264,26 @@ class UriImmuteableTest extends \PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * Test the isSSL method.
+	 * Test the isSsl method.
 	 *
 	 * @return  void
 	 *
 	 * @since   1.0
-	 * @covers  Joomla\Uri\UriImmutable::isSSL
+	 * @covers  Joomla\Uri\UriImmutable::isSsl
 	 */
-	public function testIsSSL()
+	public function testisSsl()
 	{
 		$this->object = new UriImmutable('https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
 
 		$this->assertThat(
-			$this->object->isSSL(),
+			$this->object->isSsl(),
 			$this->equalTo(true)
 		);
 
 		$this->object = new UriImmutable('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
 
 		$this->assertThat(
-			$this->object->isSSL(),
+			$this->object->isSsl(),
 			$this->equalTo(false)
 		);
 	}
