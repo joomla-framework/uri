@@ -2,7 +2,7 @@
 /**
  * Part of the Joomla Framework Uri Package
  *
- * @copyright  Copyright (C) 2005 - 2013 Open Source Matters. All rights reserved.
+ * @copyright  Copyright (C) 2005 - 2015 Open Source Matters, Inc. All rights reserved.
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
@@ -53,7 +53,7 @@ interface UriInterface
 	 *
 	 * @since   1.0
 	 */
-	public function toString(array $parts = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'));
+	public function toString(array $parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment']);
 
 	/**
 	 * Checks if variable exists.
@@ -228,7 +228,7 @@ interface UriInterface
 	 *
 	 * @since   1.0
 	 */
-	public function isSSL();
+	public function isSsl();
 
 	/**
 	 * Retrieve the authority component of the URI.
