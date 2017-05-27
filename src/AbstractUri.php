@@ -171,7 +171,7 @@ abstract class AbstractUri implements UriInterface
 	 * @param   string  $name     Name of the query variable to get.
 	 * @param   string  $default  Default value to return if the variable is not set.
 	 *
-	 * @return  mixed  Requested query variable if present otherwise the default value.
+	 * @return  mixed   Requested query variable if present otherwise the default value.
 	 *
 	 * @since   1.0
 	 */
@@ -190,7 +190,7 @@ abstract class AbstractUri implements UriInterface
 	 *
 	 * @param   boolean  $toArray  True to return the query as a key => value pair array.
 	 *
-	 * @return  array|string   Query string, optionally as an array.
+	 * @return  string|array   Query string or Array of parts in query string depending on the function param
 	 *
 	 * @since   1.0
 	 */
