@@ -57,7 +57,7 @@ class UriHelperTest extends TestCase
 	}
 
 	/**
-	 * @testdox  Ensure parse_url() parses a URL with UTF-8 characters correctly even with wrong LCTYPE
+	 * @testdox  Ensure parse_url() parses a URL with UTF-8 characters correctly even with non utf-8 LCTYPE
 	 *
 	 * @covers   Joomla\Uri\UriHelper::parse_url
 	 */
