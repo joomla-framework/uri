@@ -57,6 +57,31 @@ class UriHelperTest extends TestCase
 	}
 
 	/**
+	 * @testdox  Ensure parse_url() parses a URL with UTF-8 characters correctly even with wrong LCTYPE
+	 *
+	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 */
+	public function testEnsureParseUrlParsesAUrlWithUTF8CharactersAndWrongLcTypeCorrectly()
+	{
+		// Set a non utf-8 LCTYPE
+		$previousLcType = setlocale(LC_CTYPE, '0');
+		setlocale(LC_CTYPE, 'en_GB');
+
+		// Test special characters in URL
+		$url = 'http://mydomain.com/mytestpath/中文/纹身馆简介你好/媒体报道';
+		$expected = parse_url($url);
+
+		// Fix up path for UTF-8 characters
+		$expected['path'] = '/mytestpath/中文/纹身馆简介你好/媒体报道';
+		$actual = UriHelper::parse_url($url);
+
+		// Return to previous LCTYPE
+		setlocale(LC_CTYPE, $previousLcType);
+
+		$this->assertEquals($expected, $actual);
+	}
+
+	/**
 	 * @testdox  Ensure parse_url() parses a URL with special characters correctly
 	 *
 	 * @covers   Joomla\Uri\UriHelper::parse_url
