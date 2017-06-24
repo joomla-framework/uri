@@ -29,30 +29,20 @@ class UriHelper
 	 */
 	public static function parse_url($url)
 	{
-		$result = false;
+		// Get the current LC_CTYPE.
+		$currentLcCType = @setlocale(LC_CTYPE, '0');
 
-		// Build arrays of values we need to decode before parsing
-		$entities     = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D'];
-		$replacements = ['!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]"];
-
-		// Create encoded URL with special URL characters decoded so it can be parsed
-		// All other characters will be encoded
-		$encodedURL = str_replace($entities, $replacements, urlencode($url));
-
-		// Parse the encoded URL
-		$encodedParts = parse_url($encodedURL);
-
-		// Now, decode each value of the resulting array
-		if ($encodedParts)
+		// For utf-8 LC_CTYPE just use PHP native method.
+		if (stripos($currentLcCType, 'utf-8') !== false)
 		{
-			$result = [];
-
-			foreach ($encodedParts as $key => $value)
-			{
-				$result[$key] = urldecode(str_replace($replacements, $entities, $value));
-			}
+			return parse_url($url);
 		}
 
-		return $result;
+		// For non utf-8 LC_CTYPE change the LC_CTYPE locale before parsing.
+		@setlocale(LC_CTYPE, 'C');
+		$parsedUrl = parse_url($url);
+		@setlocale(LC_CTYPE, $currentLcCType);
+
+		return $parsedUrl;
 	}
 }
