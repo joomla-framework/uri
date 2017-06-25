@@ -20,7 +20,8 @@ class UriHelper
 	/**
 	 * Does a UTF-8 safe version of PHP parse_url function
 	 *
-	 * @param   string  $url  URL to parse
+	 * @param   string   $url        URL to parse
+	 * @param   integer  $component  Retrieve just a specific URL component
 	 *
 	 * @return  mixed  Associative array or false if badly formed URL.
 	 *
