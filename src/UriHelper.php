@@ -31,52 +31,43 @@ class UriHelper
 	 */
 	public static function parse_url($url, $component = -1)
 	{
-		// Get the current LC_CTYPE locale.
-		$currentLocaleLcCType = setlocale(LC_CTYPE, 0);
-
-		if ($currentLocaleLcCType !== false)
+		// If no UTF-8 chars in the url just parse it using php native parse_url which is faster.
+		if (utf8_encode(utf8_decode($url)) === $url)
 		{
-			// UTF-8 LC_CTYPE locale, just use PHP native method.
-			if ($currentLocaleLcCType === 'C' || stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
-			{
-				return parse_url($url, $component);
-			}
-
-			// Non UTF-8 LC_CTYPE locale, change to C locale before parsing.
-			if (setlocale(LC_CTYPE, 'C') === 'C')
-			{
-				$parsedUrl = parse_url($url, $component);
-				setlocale(LC_CTYPE, $currentLocaleLcCType);
-
-				return $parsedUrl;
-			}
+			return parse_url($url, $component);
 		}
 
-		// Unable to get LC_CTYPE locale, use old method.
-		$result = false;
+		// Get the current LC_CTYPE locale.
+		$currentLocaleLcCType = @setlocale(LC_CTYPE, 0);
+
+		// If UTF-8 locale found, just use PHP native method which is faster.
+		if ($currentLocaleLcCType !== false && $currentLocaleLcCType === 'C' || stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
+		{
+			return parse_url($url, $component);
+		}
+
+		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
 
 		// Build arrays of values we need to decode before parsing
 		$entities     = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D'];
-		$replacements = ['!', '*', "'", "(", ")", ";", ":", "@", "&", "=", "$", ",", "/", "?", "#", "[", "]"];
+		$replacements = ['!', '*', '\'', '(', ')', ';', ':', '@', '&', '=', '$', ',', '/', '?', '#', '[', ']'];
 
 		// Create encoded URL with special URL characters decoded so it can be parsed
 		// All other characters will be encoded
 		$encodedURL = str_replace($entities, $replacements, urlencode($url));
 
 		// Parse the encoded URL
-		$encodedParts = parse_url($encodedURL, $component);
+		$parts = parse_url($encodedURL, $component);
 
 		// Now, decode each value of the resulting array
-		if ($encodedParts)
+		if ($parts)
 		{
-			$result = [];
-
-			foreach ($encodedParts as $key => $value)
+			foreach ($parts as &$value)
 			{
-				$result[$key] = urldecode(str_replace($replacements, $entities, $value));
+				$value = urldecode(str_replace($replacements, $entities, $value));
 			}
 		}
 
-		return $result;
+		return $parts;
 	}
 }
