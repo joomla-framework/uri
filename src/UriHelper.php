@@ -42,7 +42,7 @@ class UriHelper
 
 		// If UTF-8 locale found, just use PHP native method which is faster.
 		if ($currentLocaleLcCType !== false && $currentLocaleLcCType === 'C'
-		    || stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
+			|| stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
 		{
 			return parse_url($url, $component);
 		}
