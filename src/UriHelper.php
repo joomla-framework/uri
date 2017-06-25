@@ -48,7 +48,7 @@ class UriHelper
 		}
 
 		// Non UTF-8 LC_CTYPE locale, try to use 'C' locale for parsing the url.
-		if (@setlocale(LC_CTYPE, 'C') === 'C')
+		if ($currentLocaleLcCType !== false && @setlocale(LC_CTYPE, 'C') === 'C')
 		{
 			$parsedUrl = parse_url($url, $component);
 
