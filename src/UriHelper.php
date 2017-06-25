@@ -36,7 +36,7 @@ class UriHelper
 		if ($currentLocaleLcCType !== false)
 		{
 			// UTF-8 LC_CTYPE locale, just use PHP native method.
-			if (stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
+			if ($currentLocaleLcCType === 'C' || stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false)
 			{
 				return parse_url($url, $component);
 			}
