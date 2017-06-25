@@ -41,10 +41,21 @@ class UriHelper
 		$currentLocaleLcCType = @setlocale(LC_CTYPE, 0);
 
 		// If UTF-8 locale found, just use PHP native method which is faster.
-		if ($currentLocaleLcCType !== false && ($currentLocaleLcCType === 'C'
-			|| stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false))
+		if ($currentLocaleLcCType !== false
+			&& ($currentLocaleLcCType === 'C' || stripos($currentLocaleLcCType, 'UTF-8') !== false || stripos($currentLocaleLcCType, 'UTF8') !== false))
 		{
 			return parse_url($url, $component);
+		}
+
+		// Non UTF-8 LC_CTYPE locale, try to use 'C' locale for parsing the url.
+		if (@setlocale(LC_CTYPE, 'C') === 'C')
+		{
+			$parsedUrl = parse_url($url, $component);
+
+			// Go back to previous locale.
+			@setlocale(LC_CTYPE, $currentLocaleLcCType);
+
+			return $parsedUrl;
 		}
 
 		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
