@@ -28,7 +28,7 @@ class UriHelper
 	 * @link    https://secure.php.net/manual/en/function.parse-url.php
 	 * @since   1.0
 	 */
-	public static function parse_url($url, int $component = -1)
+	public static function parse_url($url, $component = -1)
 	{
 		// Get the current LC_CTYPE locale.
 		$currentLocaleLcCType = setlocale(LC_CTYPE, 0);
