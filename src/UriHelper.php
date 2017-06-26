@@ -32,7 +32,7 @@ class UriHelper
 	public static function parse_url($url, $component = -1)
 	{
 		// If no UTF-8 chars in the url just parse it using php native parse_url which is faster.
-		if (preg_match('#^.#u', $url) === 1)
+		if (preg_match('#^.#u', $url) === 0)
 		{
 			return parse_url($url, $component);
 		}
