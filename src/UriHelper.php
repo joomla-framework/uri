@@ -42,12 +42,8 @@ class UriHelper
 		$entities     = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D'];
 		$replacements = ['!', '*', '\'', '(', ')', ';', ':', '@', '&', '=', '$', ',', '/', '?', '#', '[', ']'];
 
-		// Create encoded URL with special URL characters decoded so it can be parsed
-		// All other characters will be encoded
-		$encodedURL = str_replace($entities, $replacements, urlencode($url));
-
-		// Parse the encoded URL
-		$parts = parse_url($encodedURL, $component);
+		// Parse the encoded URL with special URL characters decoded so it can be parsed
+		$parts = parse_url(str_replace($entities, $replacements, urlencode($url)), $component);
 
 		// Now, decode each value of the resulting array
 		if ($parts)
