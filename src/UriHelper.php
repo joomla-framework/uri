@@ -36,12 +36,6 @@ class UriHelper
 			return parse_url($url, $component);
 		}
 
-		// If mbstring extension is loaded force mb conversion to UTF-8.
-		if (extension_loaded('mbstring') === true && function_exists('mb_convert_encoding') === true)
-		{
-			return parse_url(mb_convert_encoding($url, 'UTF-8'), $component);
-		}
-
 		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
 
 		// Build arrays of values we need to decode before parsing
