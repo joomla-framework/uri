@@ -38,19 +38,38 @@ class UriHelper
 
 		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
 
-		// Build arrays of values we need to decode before parsing
-		$entities     = ['%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D'];
-		$replacements = ['!', '*', '\'', '(', ')', ';', ':', '@', '&', '=', '$', ',', '/', '?', '#', '[', ']'];
+		// Build arrays of values we need to decode before parsing.
+		$entities     = [
+			'%21' => '!',
+			'%2A' => '*',
+			'%27' => '\'',
+			'%28' => '(',
+			'%29' => ')',
+			'%3B' => ';',
+			'%3A' => ':',
+			'%40' => '@',
+			'%26' => '&',
+			'%3D' => '=',
+			'%24' => '$',
+			'%2C' => ',',
+			'%2F' => '/',
+			'%3F' => '?',
+			'%23' => '#',
+			'%5B' => '[',
+			'%5D' => ']',
+		];
 
-		// Parse the encoded URL with special URL characters decoded so it can be parsed
-		$parts = parse_url(str_replace($entities, $replacements, urlencode($url)), $component);
+		// Parse the encoded url.
+		$parts = parse_url(strtr(urlencode($url), $entities), $component);
 
 		// Now, decode each value of the resulting array
 		if ($parts)
 		{
+			$entities = array_flip($entities);
+
 			foreach ($parts as &$value)
 			{
-				$value = urldecode(str_replace($replacements, $entities, $value));
+				$value = urldecode(strtr($value, $entities));
 			}
 		}
 
