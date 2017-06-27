@@ -39,7 +39,7 @@ class UriHelper
 		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
 
 		// Build arrays of values we need to decode before parsing.
-		$entities     = [
+		$entities = [
 			'%21' => '!',
 			'%2A' => '*',
 			'%27' => '\'',
