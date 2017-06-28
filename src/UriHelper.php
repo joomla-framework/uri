@@ -36,10 +36,10 @@ class UriHelper
 			return parse_url($url, $component);
 		}
 
-		// Fallback to the old slower custom method to encode utf-8 chars before parsing the url.
+		// URL with UTF-8 chars in the url.
 
-		// Build arrays of values we need to decode before parsing.
-		$entities = [
+		// Build the reserved uri encoded characters map.
+		$reservedUriCharactersMap = [
 			'%21' => '!',
 			'%2A' => '*',
 			'%27' => '\'',
@@ -59,20 +59,10 @@ class UriHelper
 			'%5D' => ']',
 		];
 
-		// Parse the encoded url.
-		$parts = parse_url(strtr(urlencode($url), $entities), $component);
+		// Encode the URL (so UTF-8 chars are encoded), revert the encoding in the reserved uri characters and parse the url.
+		$parts = parse_url(strtr(urlencode($url), $reservedUriCharactersMap), $component);
 
-		// Now, decode each value of the resulting array
-		if ($parts)
-		{
-			$entities = array_flip($entities);
-
-			foreach ($parts as &$value)
-			{
-				$value = urldecode(strtr($value, $entities));
-			}
-		}
-
-		return $parts;
+		// With a well formed url decode the url (so UTF-8 chars are decoded).
+		return $parts ? array_map('urldecode', $parts) : $parts;
 	}
 }
