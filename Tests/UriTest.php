@@ -78,6 +78,33 @@ class UriTest extends TestCase
 	}
 
 	/**
+	 * Test the buildQuery method for proper encoding.
+	 *
+	 * @return  void
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 * @covers  Joomla\Uri\Uri::buildQuery
+	 * @link    https://github.com/joomla-framework/uri/pull/21
+	 */
+	public function testBuildQuery()
+	{
+		$this->assertThat(
+			TestHelper::invoke(
+				$this->object,
+				'buildQuery',
+				array(
+					'option' => 'com_tags',
+					'view'   => 'tag',
+					'id'     => array(3),
+					'types'  => array(2),
+					'Itemid' => 110,
+				)
+			),
+			$this->equalTo('option=com_tags&view=tag&id[0]=3&types[0]=2&Itemid=110')
+		);
+	}
+
+	/**
 	 * Test the cleanPath method.
 	 *
 	 * @return  void
