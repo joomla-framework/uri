@@ -86,7 +86,7 @@ class UriTest extends TestCase
 	 * @covers  Joomla\Uri\Uri::buildQuery
 	 * @link    https://github.com/joomla-framework/uri/pull/21
 	 */
-	public function testBuildQuery()
+	public function testBuildQueryEncoding()
 	{
 		$this->assertThat(
 			TestHelper::invoke(
