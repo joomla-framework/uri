@@ -4,15 +4,15 @@
     "description": "Joomla Uri Package",
     "keywords": ["joomla", "framework", "uri"],
     "homepage": "https://github.com/joomla-framework/uri",
-    "license": "GPL-2.0+",
+    "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^5.5.9|~7.0",
+        "php": "~7.0",
         "psr/http-message": "~1.0"
     },
     "require-dev": {
+        "joomla/coding-standards": "~2.0@alpha",
 	    "joomla/test": "~1.0",
-        "phpunit/phpunit": "~4.8|~5.0",
-        "squizlabs/php_codesniffer": "1.*"
+        "phpunit/phpunit": "~6.3"
     },
     "autoload": {
         "psr-4": {

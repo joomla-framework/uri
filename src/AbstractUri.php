@@ -189,7 +189,7 @@ abstract class AbstractUri implements UriInterface
 	 * @param   string  $name     Name of the query variable to get.
 	 * @param   string  $default  Default value to return if the variable is not set.
 	 *
-	 * @return  mixed  Requested query variable if present otherwise the default value.
+	 * @return  mixed   Requested query variable if present otherwise the default value.
 	 *
 	 * @since   1.0
 	 */
@@ -484,7 +484,7 @@ abstract class AbstractUri implements UriInterface
 	 */
 	public function isSsl()
 	{
-		return $this->getScheme() == 'https';
+		return strtolower($this->getScheme()) === 'https';
 	}
 
 	/**
@@ -525,7 +525,7 @@ abstract class AbstractUri implements UriInterface
 
 		if ($parts === false)
 		{
-			throw new \RuntimeException('Could not parse the requested URI');
+			throw new \RuntimeException(sprintf('Could not parse the requested URI %s', $uri));
 		}
 
 		$retval = ($parts) ? true : false;
