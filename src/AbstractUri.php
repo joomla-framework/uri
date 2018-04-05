@@ -227,6 +227,22 @@ abstract class AbstractUri implements UriInterface
 	 */
 	public function getQuery()
 	{
+		// B/C layer to be removed at 3.0
+		$args = func_get_args();
+
+		if (count($args) > 0 && $args[0] === true)
+		{
+			@trigger_error(
+				sprintf(
+					'Retrieving the query string as an array in %s() is deprecated without replacement and will be removed in 3.0.',
+					__METHOD__
+				),
+				E_USER_DEPRECATED
+			);
+
+			return $this->vars;
+		}
+
 		// If the query is empty build it first
 		if (is_null($this->query))
 		{

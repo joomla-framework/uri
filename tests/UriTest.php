@@ -325,6 +325,11 @@ class UriTest extends TestCase
 			$this->equalTo('var=value')
 		);
 
+		$this->assertThat(
+			$this->object->getQuery(true),
+			$this->equalTo(array('var' => 'value'))
+		);
+
 		// Set a new query
 		$this->object->setQuery('somevar=somevalue');
 
