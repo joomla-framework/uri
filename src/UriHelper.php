@@ -82,7 +82,7 @@ class UriHelper
 	 *
 	 * @param   string  $scheme  The current scheme
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
@@ -94,10 +94,10 @@ class UriHelper
 	/**
 	 * Is a given port non-standard for the current scheme?
 	 *
-	 * @param   string  $scheme  The current scheme
-	 * @param   int     $port    The port for the current scheme
+	 * @param   string   $scheme  The current scheme
+	 * @param   integer  $port    The port for the current scheme
 	 *
-	 * @return  bool
+	 * @return  boolean
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */

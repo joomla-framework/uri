@@ -166,7 +166,7 @@ interface UriInterface
 	 * If no port is present, but a scheme is present, this method MAY return
 	 * the standard port for that scheme, but SHOULD return null.
 	 *
-	 * @return  null|int  The URI port.
+	 * @return  null|integer  The URI port.
 	 *
 	 * @since   1.0
 	 */
