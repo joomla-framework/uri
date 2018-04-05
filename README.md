@@ -27,7 +27,7 @@ You can use the `Uri` class a number of different ways when dealing with Uris. I
 
 In version __DEPLOY_VERSION__ the UriInterface was made compatible with the getter methods defined in PSR-7.
 
-The UriImmutable class fully implements PSR-7 and can be injected into any PSR-7 compatible application.
+The PsrUri class fully implements PSR-7 and can be injected into any PSR-7 compatible application.
 
 
 ### Usage
@@ -73,19 +73,19 @@ Output:
 
 `myUser:myPass@http://localhost:8888path/to/file.php?foo=bar`
 
-#### UriImmutable
-If you wish to alter a URL in the UriImmutable class you must create a clone of the class. To do this there are various helper methods defined in PSR-7. We will show in this example how to edit the host associated with a URL. First of all we create our PSR-7 compatible object:
+#### PsrUri
+If you wish to alter a URL in the PsrUri class you must create a clone of the class. To do this there are various helper methods defined in PSR-7. We will show in this example how to edit the host associated with a URL. First of all we create our PSR-7 compatible object:
 
 ```php
 <?php
-$uri = new Joomla\Uri\Uri('http://www.joomla.org?var1=foo#page1');
+$uri = new Joomla\Uri\PsrUri('http://www.joomla.org?var1=foo#page1');
 ```
 
 to change the host we call the ```withHost``` method:
 
 ```php
 <?php
-$newUri = $uri->withHost('http://joomla.com');
+$newUri = $uri->withHost('http://www.joomla.com');
 
 echo $uri->__toString();
 echo $newUri->__toString();

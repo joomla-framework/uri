@@ -483,7 +483,7 @@ class UriTest extends TestCase
 	{
 		$this->assertThat(
 			$this->object->getPort(),
-			$this->equalTo('80')
+			$this->isNull()
 		);
 	}
 
