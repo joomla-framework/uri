@@ -106,7 +106,7 @@ abstract class AbstractUri implements UriInterface
 	 */
 	public function __construct($uri = null)
 	{
-		if (!\is_null($uri))
+		if ($uri !== null)
 		{
 			$this->parse($uri);
 		}
@@ -143,7 +143,7 @@ abstract class AbstractUri implements UriInterface
 
 			if (\defined($const))
 			{
-				$bitmask |= constant($const);
+				$bitmask |= \constant($const);
 			}
 		}
 
@@ -228,7 +228,7 @@ abstract class AbstractUri implements UriInterface
 		}
 
 		// If the query is empty build it first
-		if (\is_null($this->query))
+		if ($this->query === null)
 		{
 			$this->query = static::buildQuery($this->vars);
 		}
@@ -426,8 +426,8 @@ abstract class AbstractUri implements UriInterface
 				}
 				elseif ($path[$i] == '..' && ($i > 1 || ($i == 1 && $path[0] != '')))
 				{
-					unset($path[$i]);
-					unset($path[$i - 1]);
+					unset($path[$i], $path[$i - 1]);
+
 					$path = array_values($path);
 					$i -= 2;
 					$n -= 2;
