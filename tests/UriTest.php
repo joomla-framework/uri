@@ -7,7 +7,6 @@
 namespace Joomla\Uri\Tests;
 
 use Joomla\Uri\Uri;
-use Joomla\Test\TestHelper;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -33,145 +32,51 @@ class UriTest extends TestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
 	}
 
-	/**
-	 * Test the __toString method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::__toString
-	 */
 	public function test__toString()
 	{
-		$this->assertThat(
-			$this->object->__toString(),
-			$this->equalTo('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment')
+		$this->assertEquals(
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			(string) $this->object
 		);
 	}
 
-	/**
-	 * Test the buildQuery method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.2.0
-	 * @covers  Joomla\Uri\Uri::buildQuery
-	 */
-	public function testBuildQuery()
-	{
-		$this->assertThat(
-			TestHelper::invoke(
-				$this->object,
-				'buildQuery',
-				array(
-					'var' => 'value',
-					'foo' => 'bar'
-				)
-			),
-			$this->equalTo('var=value&foo=bar')
-		);
-	}
-
-	/**
-	 * Test the cleanPath method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.2.0
-	 * @covers  Joomla\Uri\Uri::cleanPath
-	 */
-	public function testcleanPath()
-	{
-		$this->assertThat(
-			TestHelper::invoke(
-				$this->object,
-				'cleanPath',
-				'/foo/bar/../boo.php'
-			),
-			$this->equalTo('/foo/boo.php')
-		);
-
-		$this->assertThat(
-			TestHelper::invoke(
-				$this->object,
-				'cleanPath',
-				'/foo/bar/../../boo.php'
-			),
-			$this->equalTo('/boo.php')
-		);
-
-		$this->assertThat(
-			TestHelper::invoke(
-				$this->object,
-				'cleanPath',
-				'/foo/bar/.././/boo.php'
-			),
-			$this->equalTo('/foo/boo.php')
-		);
-	}
-
-	/**
-	 * Test the parse method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::parse
-	 * @covers  Joomla\Uri\Uri::__construct
-	 */
 	public function testConstruct()
 	{
 		$object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value&amp;test=true#fragment');
 
-		$this->assertThat(
-			$object->getHost(),
-			$this->equalTo('www.example.com')
+		$this->assertEquals(
+			'www.example.com',
+			$object->getHost()
 		);
 
-		$this->assertThat(
-			$object->getPath(),
-			$this->equalTo('/path/file.html')
+		$this->assertEquals(
+			'/path/file.html',
+			$object->getPath()
 		);
 
-		$this->assertThat(
-			$object->getScheme(),
-			$this->equalTo('http')
+		$this->assertEquals(
+			'http',
+			$object->getScheme()
 		);
 	}
 
-	/**
-	 * Test the parse method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::parse
-	 * @covers  Joomla\Uri\Uri::__construct
-	 * @expectedException  \RuntimeException
-	 */
 	public function testParseForBadUrl()
 	{
+		$this->expectException(\RuntimeException::class);
+
 		new Uri('http:///www.example.com');
 	}
 
-	/**
-	 * Test the toString method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::toString
-	 */
 	public function testToString()
 	{
-		$this->assertThat(
-			$this->object->toString(),
-			$this->equalTo('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment')
+		$this->assertEquals(
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+			$this->object->toString()
 		);
 
 		$this->object->setQuery('somevar=somevalue');
@@ -184,422 +89,139 @@ class UriTest extends TestCase
 		$this->object->setFragment('someFragment');
 		$this->object->setPath('/this/is/a/path/to/a/file');
 
-		$this->assertThat(
-			$this->object->toString(),
-			$this->equalTo('ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment')
+		$this->assertEquals(
+			'ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment',
+			$this->object->toString()
 		);
 	}
 
-	/**
-	 * Test the setVar method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setVar
-	 */
 	public function testSetVar()
 	{
-		$this->object->setVar('somevariable', 'somevalue');
+		$this->object->setVar('somevar', 'somevalue');
 
-		$this->assertThat(
-			$this->object->getVar('somevariable'),
-			$this->equalTo('somevalue')
+		$this->assertEquals(
+			'somevalue',
+			$this->object->getVar('somevar')
 		);
 	}
 
-	/**
-	 * Test the hasVar method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::hasVar
-	 */
-	public function testHasVar()
-	{
-		$this->assertThat(
-			$this->object->hasVar('somevariable'),
-			$this->equalTo(false)
-		);
-
-		$this->assertThat(
-			$this->object->hasVar('var'),
-			$this->equalTo(true)
-		);
-	}
-
-	/**
-	 * Test the getVar method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getVar
-	 */
-	public function testGetVar()
-	{
-		$this->assertThat(
-			$this->object->getVar('var'),
-			$this->equalTo('value')
-		);
-
-		$this->assertThat(
-			$this->object->getVar('var2'),
-			$this->equalTo('')
-		);
-
-		$this->assertThat(
-			$this->object->getVar('var2', 'default'),
-			$this->equalTo('default')
-		);
-	}
-
-	/**
-	 * Test the delVar method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::delVar
-	 */
 	public function testDelVar()
 	{
-		$this->assertThat(
-			$this->object->getVar('var'),
-			$this->equalTo('value')
+		$this->assertEquals(
+			'value',
+			$this->object->getVar('var')
 		);
 
 		$this->object->delVar('var');
 
-		$this->assertThat(
-			$this->object->getVar('var'),
-			$this->equalTo('')
+		$this->assertEquals(
+			'',
+			$this->object->getVar('var')
 		);
 	}
 
-	/**
-	 * Test the setQuery method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setQuery
-	 */
 	public function testSetQuery()
 	{
 		$this->object->setQuery('somevar=somevalue');
 
-		$this->assertThat(
-			$this->object->getQuery(),
-			$this->equalTo('somevar=somevalue')
+		$this->assertEquals(
+			'somevar=somevalue',
+			$this->object->getQuery()
 		);
 
 		$this->object->setQuery('somevar=somevalue&amp;test=true');
 
-		$this->assertThat(
-			$this->object->getQuery(),
-			$this->equalTo('somevar=somevalue&test=true')
+		$this->assertEquals(
+			'somevar=somevalue&test=true',
+			$this->object->getQuery()
 		);
 
-		$this->object->setQuery(array('somevar' => 'somevalue', 'test' => 'true'));
+		$this->object->setQuery(['somevar' => 'somevalue', 'test' => 'true']);
 
-		$this->assertThat(
-			$this->object->getQuery(),
-			$this->equalTo('somevar=somevalue&test=true')
-		);
-	}
-
-	/**
-	 * Test the getQuery method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getQuery
-	 */
-	public function testGetQuery()
-	{
-		$this->assertThat(
-			$this->object->getQuery(),
-			$this->equalTo('var=value')
-		);
-
-		$this->assertThat(
-			$this->object->getQuery(true),
-			$this->equalTo(array('var' => 'value'))
-		);
-
-		// Set a new query
-		$this->object->setQuery('somevar=somevalue');
-
-		// Test if query is null, to build query in getQuery call.
-		$this->assertThat(
-			$this->object->getQuery(),
-			$this->equalTo('somevar=somevalue')
+		$this->assertEquals(
+			'somevar=somevalue&test=true',
+			$this->object->getQuery()
 		);
 	}
 
-	/**
-	 * Test the getScheme method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getScheme
-	 */
-	public function testGetScheme()
-	{
-		$this->assertThat(
-			$this->object->getScheme(),
-			$this->equalTo('http')
-		);
-	}
-
-	/**
-	 * Test the setScheme method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setScheme
-	 */
 	public function testSetScheme()
 	{
 		$this->object->setScheme('ftp');
 
-		$this->assertThat(
-			$this->object->getScheme(),
-			$this->equalTo('ftp')
+		$this->assertEquals(
+			'ftp',
+			$this->object->getScheme()
 		);
 	}
 
-	/**
-	 * Test the getUser method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getUser
-	 */
-	public function testGetUser()
-	{
-		$this->assertThat(
-			$this->object->getUser(),
-			$this->equalTo('someuser')
-		);
-	}
-
-	/**
-	 * Test the setUser method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setUser
-	 */
 	public function testSetUser()
 	{
 		$this->object->setUser('root');
 
-		$this->assertThat(
-			$this->object->getUser(),
-			$this->equalTo('root')
+		$this->assertEquals(
+			'root',
+			$this->object->getUser()
 		);
 	}
 
-	/**
-	 * Test the getPass method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getPass
-	 */
-	public function testGetPass()
-	{
-		$this->assertThat(
-			$this->object->getPass(),
-			$this->equalTo('somepass')
-		);
-	}
-
-	/**
-	 * Test the setPass method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setPass
-	 */
 	public function testSetPass()
 	{
 		$this->object->setPass('secret');
 
-		$this->assertThat(
-			$this->object->getPass(),
-			$this->equalTo('secret')
+		$this->assertEquals(
+			'secret',
+			$this->object->getPass()
 		);
 	}
 
-	/**
-	 * Test the getHost method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getHost
-	 */
-	public function testGetHost()
-	{
-		$this->assertThat(
-			$this->object->getHost(),
-			$this->equalTo('www.example.com')
-		);
-	}
-
-	/**
-	 * Test the setHost method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setHost
-	 */
 	public function testSetHost()
 	{
 		$this->object->setHost('www.example.org');
 
-		$this->assertThat(
-			$this->object->getHost(),
-			$this->equalTo('www.example.org')
+		$this->assertEquals(
+			'www.example.org',
+			$this->object->getHost()
 		);
 	}
 
-	/**
-	 * Test the getPort method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getPort
-	 */
-	public function testGetPort()
-	{
-		$this->assertThat(
-			$this->object->getPort(),
-			$this->equalTo('80')
-		);
-	}
-
-	/**
-	 * Test the setPort method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setPort
-	 */
 	public function testSetPort()
 	{
 		$this->object->setPort('8888');
 
-		$this->assertThat(
-			$this->object->getPort(),
-			$this->equalTo('8888')
+		$this->assertEquals(
+			'8888',
+			$this->object->getPort()
 		);
 	}
 
-	/**
-	 * Test the getPath method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getPath
-	 */
-	public function testGetPath()
-	{
-		$this->assertThat(
-			$this->object->getPath(),
-			$this->equalTo('/path/file.html')
-		);
-	}
-
-	/**
-	 * Test the setPath method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setPath
-	 */
 	public function testSetPath()
 	{
 		$this->object->setPath('/this/is/a/path/to/a/file.htm');
 
-		$this->assertThat(
-			$this->object->getPath(),
-			$this->equalTo('/this/is/a/path/to/a/file.htm')
+		$this->assertEquals(
+			'/this/is/a/path/to/a/file.htm',
+			$this->object->getPath()
 		);
 	}
 
-	/**
-	 * Test the getFragment method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::getFragment
-	 */
-	public function testGetFragment()
-	{
-		$this->assertThat(
-			$this->object->getFragment(),
-			$this->equalTo('fragment')
-		);
-	}
-
-	/**
-	 * Test the setFragment method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::setFragment
-	 */
 	public function testSetFragment()
 	{
 		$this->object->setFragment('someFragment');
 
-		$this->assertThat(
-			$this->object->getFragment(),
-			$this->equalTo('someFragment')
+		$this->assertEquals(
+			'someFragment',
+			$this->object->getFragment()
 		);
 	}
 
-	/**
-	 * Test the isSsl method.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 * @covers  Joomla\Uri\Uri::isSsl
-	 */
 	public function testisSsl()
 	{
-		$object = new Uri('https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
-
-		$this->assertThat(
-			$object->isSsl(),
-			$this->equalTo(true)
+		$this->assertTrue(
+			(new Uri('https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
 		);
 
-		$object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
-
-		$this->assertThat(
-			$object->isSsl(),
-			$this->equalTo(false)
+		$this->assertFalse(
+			(new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
 		);
 	}
 }
