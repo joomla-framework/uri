@@ -23,9 +23,9 @@ class UriHelper
 	 * @param   string   $url        URL to parse
 	 * @param   integer  $component  Retrieve just a specific URL component
 	 *
-	 * @return  mixed  Associative array or false if badly formed URL.
+	 * @return  array|boolean  Associative array or false if badly formed URL.
 	 *
-	 * @link    https://secure.php.net/manual/en/function.parse-url.php
+	 * @link    https://www.php.net/manual/en/function.parse-url.php
 	 * @since   1.0
 	 */
 	public static function parse_url($url, $component = -1)
