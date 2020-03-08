@@ -17,7 +17,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlCorrectly()
 	{
@@ -29,7 +29,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with all options correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithAllOptionsCorrectly()
 	{
@@ -41,7 +41,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with UTF-8 characters correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithUTF8CharactersCorrectly()
 	{
@@ -59,7 +59,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with UTF-8 characters correctly even with non utf-8 LCTYPE
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithUTF8CharactersAndWrongLcTypeCorrectly()
 	{
@@ -84,7 +84,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with special characters correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithSpecialCharactersCorrectly()
 	{
@@ -96,7 +96,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with encoded characters correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithEncodedCharactersCorrectly()
 	{
@@ -108,7 +108,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() parses a URL with mixed characters correctly
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlParsesAUrlWithMixedCharactersCorrectly()
 	{
@@ -126,7 +126,7 @@ class UriHelperTest extends TestCase
 	/**
 	 * @testdox  Ensure parse_url() returns false on an invalid URL
 	 *
-	 * @covers   Joomla\Uri\UriHelper::parse_url
+	 * @covers   Joomla\Uri\UriHelper
 	 */
 	public function testEnsureParseUrlReturnsFalseOnAnInvalidUrl()
 	{

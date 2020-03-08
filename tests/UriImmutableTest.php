@@ -12,7 +12,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Tests for the Joomla\Uri\UriImmutable class.
  */
-class UriImmuteableTest extends TestCase
+class UriImmutableTest extends TestCase
 {
 	/**
 	 * Object under test
