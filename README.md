@@ -1,4 +1,4 @@
-## The Uri Package [![Build Status](https://travis-ci.org/joomla-framework/uri.png?branch=master)](https://travis-ci.org/joomla-framework/uri) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/joomla-framework/uri/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/joomla-framework/uri/?branch=master)
+## The Uri Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/uri/status.svg?ref=refs/heads/2.0-dev)](https://ci.joomla.org/joomla-framework/uri)
 
 [![Latest Stable Version](https://poser.pugx.org/joomla/uri/v/stable)](https://packagist.org/packages/joomla/uri)
 [![Total Downloads](https://poser.pugx.org/joomla/uri/downloads)](https://packagist.org/packages/joomla/uri)
@@ -66,12 +66,12 @@ Output:
 
 ## Installation via Composer
 
-Add `"joomla/uri": "2.0.*@dev"` to the require block in your composer.json and then run `composer install`.
+Add `"joomla/uri": "~1.0"` to the require block in your composer.json and then run `composer install`.
 
 ```json
 {
 	"require": {
-		"joomla/uri": "2.0.*@dev"
+		"joomla/uri": "~1.0"
 	}
 }
 ```
@@ -79,5 +79,5 @@ Add `"joomla/uri": "2.0.*@dev"` to the require block in your composer.json and t
 Alternatively, you can simply run the following from the command line:
 
 ```sh
-composer require joomla/uri "2.0.*@dev"
+composer require joomla/uri "~1.0"
 ```
