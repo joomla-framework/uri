@@ -560,4 +560,98 @@ class UriTest extends TestCase
 			$this->equalTo(false)
 		);
 	}
+
+	public function queryParams()
+	{
+		return array(
+			array(
+				array('foo', 'bar', 'baz', 'boom', 'cow' => 'milk', 'php' => 'hypertext processor'),
+				'0=foo&1=bar&2=baz&3=boom&cow=milk&php=hypertext+processor'
+			),
+			array(
+				array(
+					'user'     => array(
+						'name' => 'Bob Smith',
+						'age'  => 47,
+						'sex'  => 'M',
+						'dob'  => '5/12/1956'
+					),
+					'pastimes' => array('golf', 'opera', 'poker', 'rap'),
+					'children' => array(
+						'bobby' => array('age' => 12, 'sex' => 'M'),
+						'sally' => array('age' => 8, 'sex' => 'F')
+					),
+					'CEO'
+				),
+				'user%5Bname%5D=Bob+Smith&user%5Bage%5D=47&user%5Bsex%5D=M&' .
+				'user%5Bdob%5D=5%2F12%2F1956&pastimes%5B0%5D=golf&pastimes%5B1%5D=opera&' .
+				'pastimes%5B2%5D=poker&pastimes%5B3%5D=rap&children%5Bbobby%5D%5Bage%5D=12&' .
+				'children%5Bbobby%5D%5Bsex%5D=M&children%5Bsally%5D%5Bage%5D=8&children%5Bsally%5D%5Bsex%5D=F&0=CEO'
+			),
+		);
+	}
+
+	/**
+	 * @testdox Query can be retrieved as a string suitable for use in URIs
+	 *
+	 * @param $array
+	 * @param $string
+	 *
+	 * @dataProvider queryParams
+	 */
+	public function testBuildQueryFromArrayToString($array, $string)
+	{
+		$uri = new Uri();
+		$uri->setQuery($array);
+
+		$this->assertEquals($string, $uri->getQuery(false), 'Uri::getQuery() array -> string failed');
+	}
+
+	/**
+	 * @testdox Query can be retrieved as an array with decoded values
+	 *
+	 * @param $array
+	 * @param $string
+	 *
+	 * @dataProvider queryParams
+	 */
+	public function testBuildQueryArrayToArray($array, $string)
+	{
+		$uri = new Uri();
+		$uri->setQuery($array);
+
+		$this->assertEquals($array, $uri->getQuery(true), 'Uri::getQuery() array -> array failed');
+	}
+
+	/**
+	 * @testdox Query can be retrieved as a string suitable for use in URIs
+	 *
+	 * @param $array
+	 * @param $string
+	 *
+	 * @dataProvider queryParams
+	 */
+	public function testBuildQueryFromStringToString($array, $string)
+	{
+		$uri = new Uri();
+		$uri->setQuery($string);
+
+		$this->assertEquals($string, $uri->getQuery(false), 'Uri::getQuery() string -> string failed');
+	}
+
+	/**
+	 * @testdox Query can be retrieved as an array with decoded values
+	 *
+	 * @param $array
+	 * @param $string
+	 *
+	 * @dataProvider queryParams
+	 */
+	public function testBuildQueryStringToArray($array, $string)
+	{
+		$uri = new Uri();
+		$uri->setQuery($string);
+
+		$this->assertEquals($array, $uri->getQuery(true), 'Uri::getQuery() string -> array failed');
+	}
 }
