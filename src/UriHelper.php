@@ -14,6 +14,7 @@ namespace Joomla\Uri;
  * This class provides a UTF-8 safe version of parse_url().
  *
  * @since  1.0
+ * @deprecated 2.0 Use HttpUrlParser instead
  */
 class UriHelper
 {

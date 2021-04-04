@@ -116,8 +116,8 @@ abstract class AbstractUri implements UriInterface
 	 *
 	 * @since   1.0
 	 */
-	public function toString(array $parts = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'))
-	{
+	public function toString(array $parts = array('scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment')
+	) {
 		$bitmask = 0;
 
 		foreach ($parts as $part)
@@ -318,7 +318,7 @@ abstract class AbstractUri implements UriInterface
 	 */
 	public function isSsl()
 	{
-		return $this->getScheme() == 'https' ? true : false;
+		return $this->getScheme() === 'https' ? true : false;
 	}
 
 	/**
@@ -350,19 +350,18 @@ abstract class AbstractUri implements UriInterface
 		// Set the original URI to fall back on
 		$this->uri = $uri;
 
-		/*
-		 * Parse the URI and populate the object fields. If URI is parsed properly,
-		 * set method return value to true.
-		 */
+		$options = array(
+			'fix'        => true, // Sanitise URL if needed and possible
+			'addPort'    => true, // Add default port if not specified
+			'allowLogin' => true, // allow user:pass@ where forbidden (fx HTTP)
+		);
+		$parts   = Url::parse($uri, $options);
+		$success = !empty($parts);
 
-		$parts = UriHelper::parse_url($uri);
-
-		$retval = ($parts) ? true : false;
-
-		// We need to replace &amp; with & for parse_str to work right...
-		if (isset($parts['query']) && strpos($parts['query'], '&amp;') !== false)
+		if (isset($parts['query']))
 		{
-			$parts['query'] = str_replace('&amp;', '&', $parts['query']);
+			$this->vars     = $parts['query'];
+			$parts['query'] = str_replace(array('%5B', '%5D'), array('[', ']'), http_build_query($parts['query']));
 		}
 
 		$this->scheme   = isset($parts['scheme']) ? $parts['scheme'] : null;
@@ -370,24 +369,18 @@ abstract class AbstractUri implements UriInterface
 		$this->pass     = isset($parts['pass']) ? $parts['pass'] : null;
 		$this->host     = isset($parts['host']) ? $parts['host'] : null;
 		$this->port     = isset($parts['port']) ? $parts['port'] : null;
-		$this->path     = isset($parts['path']) ? $parts['path'] : null;
+		$this->path     = isset($parts['path']) ? ('/' . $parts['path']) : null;
 		$this->query    = isset($parts['query']) ? $parts['query'] : null;
 		$this->fragment = isset($parts['fragment']) ? $parts['fragment'] : null;
 
-		// Parse the query
-		if (isset($parts['query']))
-		{
-			parse_str($parts['query'], $this->vars);
-		}
-
-		return $retval;
+		return $success;
 	}
 
 	/**
 	 * Resolves //, ../ and ./ from a path and returns
 	 * the result. Eg:
 	 *
-	 * /foo/bar/../boo.php	=> /foo/boo.php
+	 * /foo/bar/../boo.php    => /foo/boo.php
 	 * /foo/bar/../../boo.php => /boo.php
 	 * /foo/bar/.././/boo.php => /foo/boo.php
 	 *
@@ -399,30 +392,26 @@ abstract class AbstractUri implements UriInterface
 	 */
 	protected function cleanPath($path)
 	{
-		$path = explode('/', preg_replace('#(/+)#', '/', $path));
-
-		for ($i = 0, $n = \count($path); $i < $n; $i++)
-		{
-			if ($path[$i] == '.' || $path[$i] == '..')
-			{
-				if (($path[$i] == '.') || ($path[$i] == '..' && $i == 1 && $path[0] == ''))
+		$parts = array_reduce(
+			explode('/', $path),
+			function ($carry, $segment) {
+				if (empty($segment) || $segment === '.')
 				{
-					unset($path[$i]);
-					$path = array_values($path);
-					$i--;
-					$n--;
+					return empty($carry) ? array('') : $carry;
 				}
-				elseif ($path[$i] == '..' && ($i > 1 || ($i == 1 && $path[0] != '')))
+
+				if ($segment === '..')
 				{
-					unset($path[$i], $path[$i - 1]);
-
-					$path = array_values($path);
-					$i -= 2;
-					$n -= 2;
+					array_pop($carry);
+					return $carry;
 				}
-			}
-		}
 
-		return implode('/', $path);
+				$carry[] = $segment;
+				return $carry;
+			},
+			array()
+		);
+
+		return implode('/', $parts);
 	}
 }
