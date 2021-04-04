@@ -19,23 +19,27 @@ class UriHelperTest extends TestCase
 	/**
 	 * Test the parse_url method.
 	 *
-	 * @return  array
-	 *
 	 * @since   1.0
 	 */
-	public function testParse_Url()
+	public function testParse_Url1()
 	{
-		$url = 'http://localhost/joomla_development/j16_trunk/administrator/index.php?option=com_contact&view=contact&layout=edit&id=5';
+		$url      = 'http://localhost/joomla_development/j16_trunk/administrator/index.php?option=com_contact&view=contact&layout=edit&id=5';
 		$expected = parse_url($url);
-		$actual = UriHelper::parse_url($url);
+		$actual   = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
+	public function testParse_Url2()
+	{
 		// Test all parts of query
 		$url = 'https://john:doe@www.google.com:80/folder/page.html#id?var=kay&var2=key&true';
 		$expected = parse_url($url);
 		$actual = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
+	public function testParse_Url3()
+	{
 		// Test special characters in URL
 		$url = 'http://joomla.org/mytestpath/È';
 		$expected = parse_url($url);
@@ -44,19 +48,28 @@ class UriHelperTest extends TestCase
 		$expected['path'] = '/mytestpath/È';
 		$actual = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
+	public function testParse_Url4()
+	{
 		// Test special characters in URL
 		$url = 'http://mydomain.com/!*\'();:@&=+$,/?%#[]" \\';
 		$expected = parse_url($url);
 		$actual = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
+	public function testParse_Url5()
+	{
 		// Test url encoding in URL
 		$url = 'http://mydomain.com/%21%2A%27%28%29%3B%3A%40%26%3D%24%2C%2F%3F%25%23%5B%22%20%5C';
 		$expected = parse_url($url);
 		$actual = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
+	public function testParse_Url6()
+	{
 		// Test a mix of the above
 		$url = 'http://john:doe@mydomain.com:80/%È21%25È3*%(';
 		$expected = parse_url($url);
@@ -65,8 +78,11 @@ class UriHelperTest extends TestCase
 		$expected['path'] = '/%È21%25È3*%(';
 		$actual = UriHelper::parse_url($url);
 		$this->assertEquals($expected, $actual, 'Line: ' . __LINE__ . ' Results should be equal');
+	}
 
-		// Test invalild URL
+	public function testParse_Url7()
+	{
+		// Test invalid URL
 		$url = 'http:///mydomain.com';
 		$expected = parse_url($url);
 		$actual = UriHelper::parse_url($url);

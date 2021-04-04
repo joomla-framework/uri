@@ -6,8 +6,8 @@
 
 namespace Joomla\Uri\Tests;
 
-use Joomla\Uri\Uri;
 use Joomla\Test\TestHelper;
+use Joomla\Uri\Uri;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -121,7 +121,9 @@ class UriTest extends TestCase
 	 */
 	public function testConstruct()
 	{
-		$object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value&amp;test=true#fragment');
+		$object = new Uri(
+			'http://someuser:somepass@www.example.com:80/path/file.html?var=value&amp;test=true#fragment'
+		);
 
 		$this->assertThat(
 			$object->getHost(),
@@ -165,7 +167,9 @@ class UriTest extends TestCase
 
 		$this->assertThat(
 			$this->object->toString(),
-			$this->equalTo('ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment')
+			$this->equalTo(
+				'ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment'
+			)
 		);
 	}
 
@@ -489,19 +493,35 @@ class UriTest extends TestCase
 	}
 
 	/**
+	 * @return \string[][]
+	 */
+	public function samplePaths()
+	{
+		/** path, expected */
+		return array(
+			array('/this/is/a/path/to/a/file.htm', '/this/is/a/path/to/a/file.htm'),
+			array('path/to/file.htm', 'path/to/file.htm'),
+			array('../path/to/file.htm', 'path/to/file.htm'),
+			array('/foo/bar/../boo.php', '/foo/boo.php'),
+			array('/foo/bar/../../boo.php', '/boo.php'),
+			array('/foo/bar/.././/boo.php', '/foo/boo.php'),
+		);
+	}
+
+	/**
 	 * Test the setPath method.
 	 *
 	 * @return  void
-	 *
+	 * @dataProvider samplePaths
 	 * @since   1.0
 	 */
-	public function testSetPath()
+	public function testSetPath($path, $expected)
 	{
-		$this->object->setPath('/this/is/a/path/to/a/file.htm');
+		$this->object->setPath($path);
 
 		$this->assertThat(
 			$this->object->getPath(),
-			$this->equalTo('/this/is/a/path/to/a/file.htm')
+			$this->equalTo($expected)
 		);
 	}
 
