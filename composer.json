@@ -6,7 +6,9 @@
     "homepage": "https://github.com/joomla-framework/uri",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^5.3.10|^7.0|^8.0"
+        "php": "^5.3.10|^7.0|^8.0",
+        "algo26-matthias/idna-convert": "~3.0",
+        "joomla/utilities": "^1.6"
     },
     "require-dev": {
         "joomla/coding-standards": "~2.0@alpha",
