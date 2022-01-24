@@ -29,7 +29,7 @@ class UriHelper
 	 */
 	public static function parse_url($url)
 	{
-		$result = false;
+		$result = array();
 
 		// Build arrays of values we need to decode before parsing
 		$entities     = array('%21', '%2A', '%27', '%28', '%29', '%3B', '%3A', '%40', '%26', '%3D', '%24', '%2C', '%2F', '%3F', '%23', '%5B', '%5D');
@@ -51,6 +51,6 @@ class UriHelper
 			}
 		}
 
-		return $result;
+		return count($result) > 0 ? $result : false;
 	}
 }
