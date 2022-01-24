@@ -343,13 +343,11 @@ class UriImmutableTest extends TestCase
     /**
      * @testdox Calling the constructor of an instantiated UriImmutable object throws an exception.
      *
-     * @since __DEPLOY_VERSION__
+     * @expectedException \BadMethodCallException
      */
 	public function testReconstruction()
 	{
 		$uri = new UriImmutable();
-
-		$this->expectException('BadMethodCallException');
 
 		$uri->__construct();
 	}

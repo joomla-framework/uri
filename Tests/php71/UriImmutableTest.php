@@ -343,8 +343,6 @@ class UriImmutableTest extends TestCase
 
     /**
      * @testdox Calling the constructor of an instantiated UriImmutable object throws an exception.
-     *
-     * @since __DEPLOY_VERSION__
      */
 	public function testReconstruction()
 	{
