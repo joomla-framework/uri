@@ -98,6 +98,8 @@ steps:
   image: joomlaprojects/docker-images:php5.3
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -126,6 +128,8 @@ steps:
   image: joomlaprojects/docker-images:php5.4
   commands:
   - php -v
+  - composer diagnose -vvv
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -154,6 +158,8 @@ steps:
   image: joomlaprojects/docker-images:php5.5
   commands:
   - php -v
+  - ""
+  - composer diagnose -vvv
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -182,6 +188,8 @@ steps:
   image: joomlaprojects/docker-images:php5.6
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -210,6 +218,8 @@ steps:
   image: joomlaprojects/docker-images:php7.0
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -238,6 +248,8 @@ steps:
   image: joomlaprojects/docker-images:php7.1
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -266,6 +278,8 @@ steps:
   image: joomlaprojects/docker-images:php7.2
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -294,6 +308,8 @@ steps:
   image: joomlaprojects/docker-images:php7.3
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -322,6 +338,8 @@ steps:
   image: joomlaprojects/docker-images:php7.4
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -350,6 +368,8 @@ steps:
   image: joomlaprojects/docker-images:php8.0
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -378,6 +398,8 @@ steps:
   image: joomlaprojects/docker-images:php8.1
   commands:
   - php -v
+  - ""
+  - ""
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -395,6 +417,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 66c41d484a40edb043809386eac880b520262ebbdfe9395d0a812d5aaabbe50f
+hmac: d45c8e720674d801d77affe32c4835f42a61528168001563f8b996c884b4d227
 
 ...
