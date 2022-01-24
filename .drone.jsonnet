@@ -133,5 +133,5 @@ local pipeline(name, phpversion, params) = {
     pipeline("7.3", "7.3", "--prefer-stable"),
     pipeline("7.4", "7.4", "--prefer-stable"),
     pipeline("8.0", "8.0", "--prefer-stable"),
-    pipeline("8.0", "8.1", "--prefer-stable")
+    pipeline("8.1", "8.1", "--prefer-stable")
 ]

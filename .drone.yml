@@ -367,7 +367,7 @@ volumes:
 
 ---
 kind: pipeline
-name: PHP 8.0
+name: PHP 8.1
 
 platform:
   os: linux
@@ -395,6 +395,6 @@ volumes:
 
 ---
 kind: signature
-hmac: 8078d1dbb28d9785d768428d4a7da4eb4ab57128d786ca6daba87bcbd5b00849
+hmac: 66c41d484a40edb043809386eac880b520262ebbdfe9395d0a812d5aaabbe50f
 
 ...
