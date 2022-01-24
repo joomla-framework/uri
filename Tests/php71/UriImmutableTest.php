@@ -4,7 +4,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Uri\Tests;
+namespace Joomla\Uri\Tests\php71;
 
 use Joomla\Uri\UriImmutable;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +32,7 @@ class UriImmutableTest extends TestCase
 	 *
 	 * @since   1.0
 	 */
-	protected function setUp()
+	protected function setUp(): void
 	{
 		$this->object = new UriImmutable('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
 	}
@@ -44,11 +44,12 @@ class UriImmutableTest extends TestCase
 	 * @return  void
 	 *
 	 * @since   1.2.0
-	 * @expectedException \BadMethodCallException
-	 */
+	 *
+     */
 	public function test__set()
 	{
-		$this->object->uri = 'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment';
+        $this->expectException(\BadMethodCallException::class);
+        $this->object->uri = 'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment';
 	}
 
 	/**
@@ -342,14 +343,12 @@ class UriImmutableTest extends TestCase
 
     /**
      * @testdox Calling the constructor of an instantiated UriImmutable object throws an exception.
-     *
-     * @since __DEPLOY_VERSION__
      */
 	public function testReconstruction()
 	{
 		$uri = new UriImmutable();
 
-		$this->expectException('BadMethodCallException');
+		$this->expectException(\BadMethodCallException::class);
 
 		$uri->__construct();
 	}

@@ -4,7 +4,7 @@
  * @license    GNU General Public License version 2 or later; see LICENSE
  */
 
-namespace Joomla\Uri\Tests;
+namespace Joomla\Uri\Tests\php53;
 
 use Joomla\Uri\Uri;
 use Joomla\Test\TestHelper;
