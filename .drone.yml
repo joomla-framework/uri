@@ -128,7 +128,7 @@ steps:
   image: joomlaprojects/docker-images:php5.4
   commands:
   - php -v
-  - composer config -g -- disable-tls false
+  - composer config -g -- disable-tls true
   - ""
   - composer update --prefer-stable
   volumes:
@@ -159,7 +159,7 @@ steps:
   commands:
   - php -v
   - ""
-  - composer config -g -- disable-tls false
+  - composer config -g -- disable-tls true
   - composer update --prefer-stable
   volumes:
   - name: composer-cache
@@ -417,6 +417,6 @@ volumes:
 
 ---
 kind: signature
-hmac: d9d72c95b7ac1e280801a18c24a984c8b359c5f6bf6bdad958af2a5b2f6df0fc
+hmac: f318bac5476dbcdac7f08569a4574f9e1a1b4f49483e1c2ec78070a0cb8299bf
 
 ...
