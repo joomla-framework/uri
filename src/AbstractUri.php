@@ -133,7 +133,7 @@ abstract class AbstractUri implements UriInterface
 	 *
 	 * @since   1.0
 	 */
-	public function toString(array $parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'])
+	public function toString($parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'])
 	{
 		$bitmask = 0;
 
@@ -342,7 +342,7 @@ abstract class AbstractUri implements UriInterface
 	 * @see     parse_str()
 	 * @since   1.0
 	 */
-	protected static function buildQuery(array $params)
+	protected static function buildQuery($params)
 	{
 		return urldecode(http_build_query($params, '', '&'));
 	}
