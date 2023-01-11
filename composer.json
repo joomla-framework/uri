@@ -6,7 +6,8 @@
     "homepage": "https://github.com/joomla-framework/uri",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.2.5|~8.0.0|~8.1.0"
+        "php": "^7.2.5|~8.0.0|~8.1.0",
+        "symfony/polyfill-mbstring": "^1.27"
     },
     "require-dev": {
         "joomla/coding-standards": "^3.0@dev",
