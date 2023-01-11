@@ -6,8 +6,10 @@
     "homepage": "https://github.com/joomla-framework/uri",
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.2.5|~8.0.0|~8.1.0",
-        "symfony/polyfill-mbstring": "^1.27"
+        "php": "^7.2.5|~8.0.0|~8.1.0|~8.2.0"
+    },
+    "suggest": {
+        "ext-mbstring": "Used to speed up url parsing"
     },
     "require-dev": {
         "joomla/coding-standards": "^3.0@dev",
