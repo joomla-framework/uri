@@ -33,7 +33,7 @@ class UriHelper
 		$result = [];
 
 		// If no UTF-8 chars in the url just parse it using php native parse_url which is faster.
-		if (utf8_decode($url) === $url)
+		if (extension_loaded('mbstring') && mb_convert_encoding($url, 'ISO-8859-1', 'UTF-8') === $url)
 		{
 			return parse_url($url, $component);
 		}
