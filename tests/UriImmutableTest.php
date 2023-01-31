@@ -14,28 +14,28 @@ use PHPUnit\Framework\TestCase;
  */
 class UriImmutableTest extends TestCase
 {
-	/**
-	 * Object under test
-	 *
-	 * @var  UriImmutable
-	 */
-	protected $object;
+    /**
+     * Object under test
+     *
+     * @var  UriImmutable
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 */
-	protected function setUp(): void
-	{
-		$this->object = new UriImmutable('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
-	}
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     */
+    protected function setUp(): void
+    {
+        $this->object = new UriImmutable('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
+    }
 
-	public function test__set()
-	{
-		$this->expectException(\BadMethodCallException::class);
+    public function test__set()
+    {
+        $this->expectException(\BadMethodCallException::class);
 
-		$this->object->uri = 'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment';
-	}
+        $this->object->uri = 'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment';
+    }
 }

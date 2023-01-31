@@ -16,212 +16,212 @@ use PHPUnit\Framework\TestCase;
  */
 class UriTest extends TestCase
 {
-	/**
-	 * Object under test
-	 *
-	 * @var    Uri
-	 * @since  1.0
-	 */
-	protected $object;
+    /**
+     * Object under test
+     *
+     * @var    Uri
+     * @since  1.0
+     */
+    protected $object;
 
-	/**
-	 * Sets up the fixture, for example, opens a network connection.
-	 * This method is called before a test is executed.
-	 *
-	 * @return  void
-	 *
-	 * @since   1.0
-	 */
-	protected function setUp(): void
-	{
-		$this->object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
-	}
+    /**
+     * Sets up the fixture, for example, opens a network connection.
+     * This method is called before a test is executed.
+     *
+     * @return  void
+     *
+     * @since   1.0
+     */
+    protected function setUp(): void
+    {
+        $this->object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
+    }
 
-	public function test__toString()
-	{
-		$this->assertEquals(
-			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
-			(string) $this->object
-		);
-	}
+    public function test__toString()
+    {
+        $this->assertEquals(
+            'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+            (string) $this->object
+        );
+    }
 
-	public function testConstruct()
-	{
-		$object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value&amp;test=true#fragment');
+    public function testConstruct()
+    {
+        $object = new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value&amp;test=true#fragment');
 
-		$this->assertEquals(
-			'www.example.com',
-			$object->getHost()
-		);
+        $this->assertEquals(
+            'www.example.com',
+            $object->getHost()
+        );
 
-		$this->assertEquals(
-			'/path/file.html',
-			$object->getPath()
-		);
+        $this->assertEquals(
+            '/path/file.html',
+            $object->getPath()
+        );
 
-		$this->assertEquals(
-			'http',
-			$object->getScheme()
-		);
-	}
+        $this->assertEquals(
+            'http',
+            $object->getScheme()
+        );
+    }
 
-	public function testParseForBadUrl()
-	{
-		$this->expectException(\RuntimeException::class);
+    public function testParseForBadUrl()
+    {
+        $this->expectException(\RuntimeException::class);
 
-		new Uri('http:///www.example.com');
-	}
+        new Uri('http:///www.example.com');
+    }
 
-	public function testToString()
-	{
-		$this->assertEquals(
-			'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
-			$this->object->toString()
-		);
+    public function testToString()
+    {
+        $this->assertEquals(
+            'http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
+            $this->object->toString()
+        );
 
-		$this->object->setQuery('somevar=somevalue');
-		$this->object->setVar('somevar2', 'somevalue2');
-		$this->object->setScheme('ftp');
-		$this->object->setUser('root');
-		$this->object->setPass('secret');
-		$this->object->setHost('www.example.org');
-		$this->object->setPort('8888');
-		$this->object->setFragment('someFragment');
-		$this->object->setPath('/this/is/a/path/to/a/file');
+        $this->object->setQuery('somevar=somevalue');
+        $this->object->setVar('somevar2', 'somevalue2');
+        $this->object->setScheme('ftp');
+        $this->object->setUser('root');
+        $this->object->setPass('secret');
+        $this->object->setHost('www.example.org');
+        $this->object->setPort('8888');
+        $this->object->setFragment('someFragment');
+        $this->object->setPath('/this/is/a/path/to/a/file');
 
-		$this->assertEquals(
-			'ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment',
-			$this->object->toString()
-		);
-	}
+        $this->assertEquals(
+            'ftp://root:secret@www.example.org:8888/this/is/a/path/to/a/file?somevar=somevalue&somevar2=somevalue2#someFragment',
+            $this->object->toString()
+        );
+    }
 
-	public function testSetVar()
-	{
-		$this->object->setVar('somevar', 'somevalue');
+    public function testSetVar()
+    {
+        $this->object->setVar('somevar', 'somevalue');
 
-		$this->assertEquals(
-			'somevalue',
-			$this->object->getVar('somevar')
-		);
-	}
+        $this->assertEquals(
+            'somevalue',
+            $this->object->getVar('somevar')
+        );
+    }
 
-	public function testDelVar()
-	{
-		$this->assertEquals(
-			'value',
-			$this->object->getVar('var')
-		);
+    public function testDelVar()
+    {
+        $this->assertEquals(
+            'value',
+            $this->object->getVar('var')
+        );
 
-		$this->object->delVar('var');
+        $this->object->delVar('var');
 
-		$this->assertEquals(
-			'',
-			$this->object->getVar('var')
-		);
-	}
+        $this->assertEquals(
+            '',
+            $this->object->getVar('var')
+        );
+    }
 
-	public function testSetQuery()
-	{
-		$this->object->setQuery('somevar=somevalue');
+    public function testSetQuery()
+    {
+        $this->object->setQuery('somevar=somevalue');
 
-		$this->assertEquals(
-			'somevar=somevalue',
-			$this->object->getQuery()
-		);
+        $this->assertEquals(
+            'somevar=somevalue',
+            $this->object->getQuery()
+        );
 
-		$this->object->setQuery('somevar=somevalue&amp;test=true');
+        $this->object->setQuery('somevar=somevalue&amp;test=true');
 
-		$this->assertEquals(
-			'somevar=somevalue&test=true',
-			$this->object->getQuery()
-		);
+        $this->assertEquals(
+            'somevar=somevalue&test=true',
+            $this->object->getQuery()
+        );
 
-		$this->object->setQuery(['somevar' => 'somevalue', 'test' => 'true']);
+        $this->object->setQuery(['somevar' => 'somevalue', 'test' => 'true']);
 
-		$this->assertEquals(
-			'somevar=somevalue&test=true',
-			$this->object->getQuery()
-		);
-	}
+        $this->assertEquals(
+            'somevar=somevalue&test=true',
+            $this->object->getQuery()
+        );
+    }
 
-	public function testSetScheme()
-	{
-		$this->object->setScheme('ftp');
+    public function testSetScheme()
+    {
+        $this->object->setScheme('ftp');
 
-		$this->assertEquals(
-			'ftp',
-			$this->object->getScheme()
-		);
-	}
+        $this->assertEquals(
+            'ftp',
+            $this->object->getScheme()
+        );
+    }
 
-	public function testSetUser()
-	{
-		$this->object->setUser('root');
+    public function testSetUser()
+    {
+        $this->object->setUser('root');
 
-		$this->assertEquals(
-			'root',
-			$this->object->getUser()
-		);
-	}
+        $this->assertEquals(
+            'root',
+            $this->object->getUser()
+        );
+    }
 
-	public function testSetPass()
-	{
-		$this->object->setPass('secret');
+    public function testSetPass()
+    {
+        $this->object->setPass('secret');
 
-		$this->assertEquals(
-			'secret',
-			$this->object->getPass()
-		);
-	}
+        $this->assertEquals(
+            'secret',
+            $this->object->getPass()
+        );
+    }
 
-	public function testSetHost()
-	{
-		$this->object->setHost('www.example.org');
+    public function testSetHost()
+    {
+        $this->object->setHost('www.example.org');
 
-		$this->assertEquals(
-			'www.example.org',
-			$this->object->getHost()
-		);
-	}
+        $this->assertEquals(
+            'www.example.org',
+            $this->object->getHost()
+        );
+    }
 
-	public function testSetPort()
-	{
-		$this->object->setPort('8888');
+    public function testSetPort()
+    {
+        $this->object->setPort('8888');
 
-		$this->assertEquals(
-			'8888',
-			$this->object->getPort()
-		);
-	}
+        $this->assertEquals(
+            '8888',
+            $this->object->getPort()
+        );
+    }
 
-	public function testSetPath()
-	{
-		$this->object->setPath('/this/is/a/path/to/a/file.htm');
+    public function testSetPath()
+    {
+        $this->object->setPath('/this/is/a/path/to/a/file.htm');
 
-		$this->assertEquals(
-			'/this/is/a/path/to/a/file.htm',
-			$this->object->getPath()
-		);
-	}
+        $this->assertEquals(
+            '/this/is/a/path/to/a/file.htm',
+            $this->object->getPath()
+        );
+    }
 
-	public function testSetFragment()
-	{
-		$this->object->setFragment('someFragment');
+    public function testSetFragment()
+    {
+        $this->object->setFragment('someFragment');
 
-		$this->assertEquals(
-			'someFragment',
-			$this->object->getFragment()
-		);
-	}
+        $this->assertEquals(
+            'someFragment',
+            $this->object->getFragment()
+        );
+    }
 
-	public function testisSsl()
-	{
-		$this->assertTrue(
-			(new Uri('https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
-		);
+    public function testisSsl()
+    {
+        $this->assertTrue(
+            (new Uri('https://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
+        );
 
-		$this->assertFalse(
-			(new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
-		);
-	}
+        $this->assertFalse(
+            (new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
+        );
+    }
 }
