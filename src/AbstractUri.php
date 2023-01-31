@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Part of the Joomla Framework Uri Package
  *
@@ -389,7 +390,7 @@ abstract class AbstractUri implements UriInterface
      * Resolves //, ../ and ./ from a path and returns the result.
      *
      * For example:
-     * /foo/bar/../boo.php	=> /foo/boo.php
+     * /foo/bar/../boo.php  => /foo/boo.php
      * /foo/bar/../../boo.php => /boo.php
      * /foo/bar/.././/boo.php => /foo/boo.php
      *
