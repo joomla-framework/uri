@@ -12,8 +12,8 @@
         "ext-mbstring": "Used to speed up url parsing"
     },
     "require-dev": {
-        "joomla/coding-standards": "^3.0@dev",
-        "phpunit/phpunit": "^8.5|^9.0"
+        "phpunit/phpunit": "^8.5|^9.0",
+        "squizlabs/php_codesniffer": "~3.7.1"
     },
     "autoload": {
         "psr-4": {
