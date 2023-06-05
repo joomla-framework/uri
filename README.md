@@ -19,7 +19,7 @@ If only read access is required it's recommended to type hint against the `UriIn
 
 The `UriHelper` class only contains one method parse_url() that's an UTF-8 safe replacement for PHP's parse_url().
 
-You can use the `Uri` class a number of different ways when dealing with Uris. It is very easy to construct a uri programatically using the methods provided in the `Uri` class.
+You can use the `Uri` class a number of different ways when dealing with Uris. It is very easy to construct a uri programmatically using the methods provided in the `Uri` class.
 
 
 ### Usage

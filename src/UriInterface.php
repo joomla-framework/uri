@@ -199,7 +199,7 @@ interface UriInterface
     public function getPath();
 
     /**
-     * Get the URI archor string
+     * Get the URI anchor string
      *
      * @return  string  The URI anchor string.
      *
