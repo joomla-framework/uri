@@ -1,4 +1,4 @@
-## The Uri Package [![Build Status](https://ci.joomla.org/api/badges/joomla-framework/uri/status.svg?ref=refs/heads/3.x-dev)](https://ci.joomla.org/joomla-framework/uri)
+## The Uri Package [![Build Status](https://github.com/joomla-framework/uri/actions/workflows/ci.yml/badge.svg?branch=3.x-dev)](https://github.com/joomla-framework/uri)
 
 [![Latest Stable Version](https://poser.pugx.org/joomla/uri/v/stable)](https://packagist.org/packages/joomla/uri)
 [![Total Downloads](https://poser.pugx.org/joomla/uri/downloads)](https://packagist.org/packages/joomla/uri)
