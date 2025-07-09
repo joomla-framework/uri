@@ -8,6 +8,7 @@
 namespace Joomla\Uri\Tests;
 
 use Joomla\Uri\AbstractUri;
+use Joomla\Uri\Tests\stubs\TestAbstractUri;
 use Joomla\Uri\UriImmutable;
 use Joomla\Uri\UriInterface;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -33,10 +34,7 @@ class AbstractUriTest extends TestCase
      */
     protected function setUp(): void
     {
-        $this->object = $this->getMockForAbstractClass(
-            AbstractUri::class,
-            ['http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment']
-        );
+        $this->object = new TestAbstractUri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment');
     }
 
     public function test__toString()
