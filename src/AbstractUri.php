@@ -75,7 +75,7 @@ abstract class AbstractUri implements UriInterface
     /**
      * Query
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
     protected $query;
@@ -405,19 +405,17 @@ abstract class AbstractUri implements UriInterface
         $path = explode('/', preg_replace('#(/+)#', '/', $path));
 
         for ($i = 0, $n = \count($path); $i < $n; $i++) {
-            if ($path[$i] == '.' || $path[$i] == '..') {
-                if (($path[$i] == '.') || ($path[$i] == '..' && $i == 1 && $path[0] == '')) {
-                    unset($path[$i]);
-                    $path = array_values($path);
-                    $i--;
-                    $n--;
-                } elseif ($path[$i] == '..' && ($i > 1 || ($i == 1 && $path[0] != ''))) {
-                    unset($path[$i], $path[$i - 1]);
+            if (($path[$i] == '.') || ($path[$i] == '..' && $i == 1 && $path[0] == '')) {
+                unset($path[$i]);
+                $path = array_values($path);
+                $i--;
+                $n--;
+            } elseif ($path[$i] == '..' && ($i > 1 || ($i == 1 && $path[0] != ''))) {
+                unset($path[$i], $path[$i - 1]);
 
-                    $path = array_values($path);
-                    $i -= 2;
-                    $n -= 2;
-                }
+                $path = array_values($path);
+                $i -= 2;
+                $n -= 2;
             }
         }
 
