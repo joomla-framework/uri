@@ -43,7 +43,7 @@ abstract class AbstractUri implements UriInterface
     /**
      * Port
      *
-     * @var    integer
+     * @var    ?integer
      * @since  1.0
      */
     protected $port;
@@ -162,15 +162,20 @@ abstract class AbstractUri implements UriInterface
         // Make sure the query is created
         $query = $this->getQuery();
 
+        // The user info is terminated by '@' whenever any part of it is rendered
+        $userInfo = '';
+        $userInfo .= $parts & static::USER ? (string) $this->user : '';
+        $userInfo .= $parts & static::PASS && (string) $this->pass !== '' ? ':' . $this->pass : '';
+
+        // Compare against '' instead of using empty(), so that parts like a fragment '0' are kept
         $uri = '';
-        $uri .= $parts & static::SCHEME ? (!empty($this->scheme) ? $this->scheme . '://' : '') : '';
-        $uri .= $parts & static::USER ? $this->user : '';
-        $uri .= $parts & static::PASS ? (!empty($this->pass) ? ':' : '') . $this->pass . (!empty($this->user) ? '@' : '') : '';
+        $uri .= $parts & static::SCHEME && (string) $this->scheme !== '' ? $this->scheme . '://' : '';
+        $uri .= $userInfo !== '' ? $userInfo . '@' : '';
         $uri .= $parts & static::HOST ? $this->host : '';
-        $uri .= $parts & static::PORT ? (!empty($this->port) ? ':' : '') . $this->port : '';
+        $uri .= $parts & static::PORT && (string) $this->port !== '' ? ':' . $this->port : '';
         $uri .= $parts & static::PATH ? $this->path : '';
-        $uri .= $parts & static::QUERY ? (!empty($query) ? '?' . $query : '') : '';
-        $uri .= $parts & static::FRAGMENT ? (!empty($this->fragment) ? '#' . $this->fragment : '') : '';
+        $uri .= $parts & static::QUERY && (string) $query !== '' ? '?' . $query : '';
+        $uri .= $parts & static::FRAGMENT && (string) $this->fragment !== '' ? '#' . $this->fragment : '';
 
         return $uri;
     }
