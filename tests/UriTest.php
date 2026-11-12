@@ -225,4 +225,30 @@ class UriTest extends TestCase
             (new Uri('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
         );
     }
+
+    public function testGettersReturnNullForMissingParts()
+    {
+        $uri = new Uri('example.com');
+
+        $this->assertNull($uri->getScheme());
+        $this->assertNull($uri->getUser());
+        $this->assertNull($uri->getPass());
+        $this->assertNull($uri->getHost());
+        $this->assertNull($uri->getPort());
+        $this->assertSame('example.com', $uri->getPath());
+        $this->assertNull($uri->getFragment());
+        $this->assertSame('', $uri->getQuery());
+    }
+
+    public function testPortIsAnInteger()
+    {
+        $this->assertSame(80, $this->object->getPort());
+        $this->assertSame(8080, $this->object->setPort(8080)->getPort());
+        $this->assertNull($this->object->setPort(null)->getPort());
+    }
+
+    public function testSettersReturnTheSameInstance()
+    {
+        $this->assertSame($this->object, $this->object->setScheme('https')->setHost('example.org')->setPath('/a'));
+    }
 }

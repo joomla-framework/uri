@@ -22,13 +22,13 @@ class Uri extends AbstractUri
      * Adds a query variable and value, replacing the value if it already exists and returning the old value
      *
      * @param   string  $name   Name of the query variable to set.
-     * @param   string  $value  Value of the query variable.
+     * @param   mixed   $value  Value of the query variable.
      *
-     * @return  string  Previous value for the query variable.
+     * @return  mixed   Previous value for the query variable.
      *
      * @since   1.0
      */
-    public function setVar($name, $value)
+    public function setVar(string $name, mixed $value): mixed
     {
         $tmp = $this->vars[$name] ?? null;
 
@@ -49,7 +49,7 @@ class Uri extends AbstractUri
      *
      * @since   1.0
      */
-    public function delVar($name)
+    public function delVar(string $name): void
     {
         if (array_key_exists($name, $this->vars)) {
             unset($this->vars[$name]);
@@ -68,7 +68,7 @@ class Uri extends AbstractUri
      *
      * @since   1.0
      */
-    public function setQuery($query)
+    public function setQuery(array|string $query): void
     {
         if (\is_array($query)) {
             $this->vars = $query;
@@ -87,13 +87,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI scheme (protocol)
      *
-     * @param   string  $scheme  The URI scheme.
+     * @param   ?string  $scheme  The URI scheme.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setScheme($scheme)
+    public function setScheme(?string $scheme): static
     {
         $this->scheme = $scheme;
 
@@ -103,13 +103,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI username
      *
-     * @param   string  $user  The URI username.
+     * @param   ?string  $user  The URI username.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setUser($user)
+    public function setUser(?string $user): static
     {
         $this->user = $user;
 
@@ -119,13 +119,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI password
      *
-     * @param   string  $pass  The URI password.
+     * @param   ?string  $pass  The URI password.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setPass($pass)
+    public function setPass(?string $pass): static
     {
         $this->pass = $pass;
 
@@ -135,13 +135,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI host
      *
-     * @param   string  $host  The URI host.
+     * @param   ?string  $host  The URI host.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setHost($host)
+    public function setHost(?string $host): static
     {
         $this->host = $host;
 
@@ -151,13 +151,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI port
      *
-     * @param   integer  $port  The URI port number.
+     * @param   ?integer  $port  The URI port number.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setPort($port)
+    public function setPort(?int $port): static
     {
         $this->port = $port;
 
@@ -169,11 +169,11 @@ class Uri extends AbstractUri
      *
      * @param   string  $path  The URI path string.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setPath($path)
+    public function setPath(string $path): static
     {
         $this->path = $this->cleanPath($path);
 
@@ -183,13 +183,13 @@ class Uri extends AbstractUri
     /**
      * Set the URI anchor string
      *
-     * @param   string  $anchor  The URI anchor string.
+     * @param   ?string  $anchor  The URI anchor string.
      *
-     * @return  Uri  This method supports chaining.
+     * @return  static  This method supports chaining.
      *
      * @since   1.0
      */
-    public function setFragment($anchor)
+    public function setFragment(?string $anchor): static
     {
         $this->fragment = $anchor;
 
