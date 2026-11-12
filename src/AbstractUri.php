@@ -127,7 +127,8 @@ abstract class AbstractUri implements UriInterface
     /**
      * Returns full URI string.
      *
-     * @param   array  $parts  An array of strings specifying the parts to render.
+     * @param   array  $parts  An array of strings specifying the parts to render: scheme, user, pass, host, port,
+     *                         path, query, fragment or all. Passing other names is deprecated.
      *
      * @return  string  The rendered URI string.
      *
@@ -142,7 +143,17 @@ abstract class AbstractUri implements UriInterface
 
             if (\defined($const)) {
                 $bitmask |= \constant($const);
+
+                continue;
             }
+
+            trigger_deprecation(
+                'joomla/uri',
+                '__DEPLOY_VERSION__',
+                'Passing the unknown part "%s" to %s() is deprecated and will throw an InvalidArgumentException in 5.0.',
+                $part,
+                __METHOD__
+            );
         }
 
         return $this->render($bitmask);
@@ -367,8 +378,6 @@ abstract class AbstractUri implements UriInterface
             throw new \RuntimeException(sprintf('Could not parse the requested URI %s', $uri));
         }
 
-        $retval = ($parts) ? true : false;
-
         // We need to replace &amp; with & for parse_str to work right...
         if (isset($parts['query']) && strpos($parts['query'], '&amp;') !== false) {
             $parts['query'] = str_replace('&amp;', '&', $parts['query']);
@@ -383,7 +392,7 @@ abstract class AbstractUri implements UriInterface
             parse_str($parts['query'], $this->vars);
         }
 
-        return $retval;
+        return true;
     }
 
     /**
