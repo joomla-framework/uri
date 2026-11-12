@@ -145,6 +145,29 @@ class UriTest extends TestCase
         );
     }
 
+    public function testQueryVariableNamesWithDotsAndSpacesAreKept()
+    {
+        $uri = new Uri('https://example.com/path?a.b=1&c+d=2&x.y[a]=1&x.y[b.c]=2&e_f=3');
+
+        $this->assertSame(
+            ['a.b' => '1', 'c d' => '2', 'x.y' => ['a' => '1', 'b.c' => '2'], 'e_f' => '3'],
+            $uri->getQuery(true)
+        );
+        $this->assertSame('1', $uri->getVar('a.b'));
+
+        $uri->delVar('c d');
+        $uri->setVar('z', '1');
+
+        $this->assertSame('https://example.com/path?a.b=1&x.y[a]=1&x.y[b.c]=2&e_f=3&z=1', $uri->toString());
+    }
+
+    public function testSetQueryKeepsVariableNamesWithDots()
+    {
+        $this->object->setQuery('a.b=1&a_b=2&list[]=x&list[]=y');
+
+        $this->assertSame(['a.b' => '1', 'a_b' => '2', 'list' => ['x', 'y']], $this->object->getQuery(true));
+    }
+
     public function testSetScheme()
     {
         $this->object->setScheme('ftp');

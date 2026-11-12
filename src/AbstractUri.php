@@ -380,10 +380,61 @@ abstract class AbstractUri implements UriInterface
 
         // Parse the query
         if (isset($parts['query'])) {
-            parse_str($parts['query'], $this->vars);
+            $this->vars = static::parseQuery($parts['query']);
         }
 
         return $retval;
+    }
+
+    /**
+     * Parse a query string into an array of variables (like parse_str(), but keeping the variable names).
+     *
+     * PHP's parse_str() replaces dots and spaces in variable names with underscores. This method keeps the names as
+     * they are in the query string, so the query can be rebuilt without changing it. Array notation (`a[]=1`,
+     * `a[b]=1`) is supported like in parse_str().
+     *
+     * @param   string  $query  The query string to parse.
+     *
+     * @return  array  The query variables.
+     *
+     * @see     parse_str()
+     * @since   __DEPLOY_VERSION__
+     */
+    protected static function parseQuery(string $query): array
+    {
+        $pairs        = explode('&', $query);
+        $replacements = [];
+
+        foreach ($pairs as $i => $pair) {
+            $nameLength = strcspn($pair, '=');
+            $name       = urldecode(substr($pair, 0, $nameLength));
+            $baseLength = strcspn($name, '[');
+            $base       = substr($name, 0, $baseLength);
+
+            // Only the part before the first bracket is mangled by parse_str()
+            if (strpbrk($base, ' .') === false) {
+                continue;
+            }
+
+            // Replace the name with a placeholder that parse_str() keeps unchanged
+            $placeholder                = 'joomla_uri_' . bin2hex($base);
+            $replacements[$placeholder] = $base;
+            $pairs[$i]                  = urlencode($placeholder . substr($name, $baseLength)) . substr($pair, $nameLength);
+        }
+
+        parse_str(implode('&', $pairs), $vars);
+
+        if ($replacements === []) {
+            return $vars;
+        }
+
+        $result = [];
+
+        foreach ($vars as $name => $value) {
+            $result[$replacements[$name] ?? $name] = $value;
+        }
+
+        return $result;
     }
 
     /**

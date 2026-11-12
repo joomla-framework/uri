@@ -77,7 +77,7 @@ class Uri extends AbstractUri
                 $query = str_replace('&amp;', '&', $query);
             }
 
-            parse_str($query, $this->vars);
+            $this->vars = static::parseQuery($query);
         }
 
         // Empty the query
