@@ -330,6 +330,8 @@ abstract class AbstractUri implements UriInterface
     /**
      * Build a query from an array (reverse of the PHP parse_str()).
      *
+     * Names and values are percent-encoded as defined in RFC 3986.
+     *
      * @param   array  $params  The array of key => value pairs to return as a query string.
      *
      * @return  string  The resulting query string.
@@ -339,7 +341,7 @@ abstract class AbstractUri implements UriInterface
      */
     protected static function buildQuery(array $params)
     {
-        return urldecode(http_build_query($params, '', '&'));
+        return http_build_query($params, '', '&', \PHP_QUERY_RFC3986);
     }
 
     /**

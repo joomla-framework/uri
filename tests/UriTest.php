@@ -145,6 +145,28 @@ class UriTest extends TestCase
         );
     }
 
+    public function testSetVarEncodesReservedCharacters()
+    {
+        $uri = new Uri('https://example.com/path');
+        $uri->setVar('q', 'a&admin=1#x');
+        $uri->setVar('s', 'a b+c');
+
+        $this->assertSame('https://example.com/path?q=a%26admin%3D1%23x&s=a%20b%2Bc', $uri->toString());
+        $this->assertSame('a&admin=1#x', $uri->getVar('q'));
+    }
+
+    public function testEncodedValuesAreKeptWhenTheQueryIsRebuilt()
+    {
+        $uri = new Uri('https://example.com/path?q=a%26b%3Dc&r=1%2B1');
+        $uri->setVar('z', '1');
+
+        $this->assertSame('https://example.com/path?q=a%26b%3Dc&r=1%2B1&z=1', $uri->toString());
+
+        $uri->setQuery('b=%20');
+
+        $this->assertSame('b=%20', $uri->getQuery());
+    }
+
     public function testSetScheme()
     {
         $this->object->setScheme('ftp');
