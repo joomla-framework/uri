@@ -8,6 +8,7 @@
 namespace Joomla\Uri\Tests;
 
 use Joomla\Uri\UriHelper;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -134,5 +135,28 @@ class UriHelperTest extends TestCase
         $url = 'http:///mydomain.com';
 
         $this->assertFalse(UriHelper::parse_url($url));
+    }
+
+    public function testParseUrlWithUtf8CharactersKeepsThePortAnInteger()
+    {
+        $this->assertSame(
+            ['scheme' => 'https', 'host' => 'bücher.de', 'port' => 8080, 'path' => '/ü', 'query' => 'x=1'],
+            UriHelper::parse_url('https://bücher.de:8080/ü?x=1')
+        );
+    }
+
+    public static function utf8ComponentProvider(): \Generator
+    {
+        yield 'host' => [\PHP_URL_HOST, 'bücher.de'];
+        yield 'port' => [\PHP_URL_PORT, 8080];
+        yield 'path' => [\PHP_URL_PATH, '/ü'];
+        yield 'query' => [\PHP_URL_QUERY, 'x=1'];
+        yield 'missing fragment' => [\PHP_URL_FRAGMENT, null];
+    }
+
+    #[DataProvider('utf8ComponentProvider')]
+    public function testParseUrlWithUtf8CharactersReturnsASingleComponent(int $component, string|int|null $expected)
+    {
+        $this->assertSame($expected, UriHelper::parse_url('https://bücher.de:8080/ü?x=1', $component));
     }
 }
