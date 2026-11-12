@@ -11,6 +11,7 @@ use Joomla\Uri\AbstractUri;
 use Joomla\Uri\Tests\stubs\TestAbstractUri;
 use Joomla\Uri\UriImmutable;
 use Joomla\Uri\UriInterface;
+use PHPUnit\Framework\Attributes\IgnoreDeprecations;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -77,6 +78,17 @@ class AbstractUriTest extends TestCase
             'someuser:somepass@www.example.com:80/path/file.html?var=value#fragment',
             $this->object->toString(['user', 'pass', 'host', 'port', 'path', 'query', 'fragment'])
         );
+    }
+
+    #[IgnoreDeprecations]
+    public function testToStringWithAnUnknownPartIsDeprecated()
+    {
+        $this->expectUserDeprecationMessage(
+            'Since joomla/uri __DEPLOY_VERSION__: Passing the unknown part "hosts" to Joomla\Uri\AbstractUri::toString()'
+            . ' is deprecated and will throw an InvalidArgumentException in 5.0.'
+        );
+
+        $this->assertSame('http:///path/file.html', $this->object->toString(['scheme', 'hosts', 'path']));
     }
 
     public function testRender()
