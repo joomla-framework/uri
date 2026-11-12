@@ -60,6 +60,31 @@ class Uri extends AbstractUri
     }
 
     /**
+     * Sets whether a query built from the query variables is percent-encoded as defined in RFC 3986
+     *
+     * By default, the query built after changing a query variable is not encoded, so a value containing a reserved
+     * character such as `&`, `=` or `#` changes the structure of the URI. This is deprecated, as of 5.0 the query
+     * is always encoded.
+     *
+     * @param   bool  $encode  True to percent-encode the names and values of the query variables.
+     *
+     * @return  static  This method supports chaining.
+     *
+     * @since   __DEPLOY_VERSION__
+     */
+    public function setQueryEncoding(bool $encode = true): static
+    {
+        if ($this->encodeQuery !== $encode) {
+            $this->encodeQuery = $encode;
+
+            // Rebuild the query with the new setting
+            $this->query = null;
+        }
+
+        return $this;
+    }
+
+    /**
      * Sets the query to a supplied string in format foo=bar&x=y
      *
      * @param   array|string  $query  The query string or array.

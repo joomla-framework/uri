@@ -97,6 +97,14 @@ abstract class AbstractUri implements UriInterface
     protected $vars = [];
 
     /**
+     * Whether a query built from the query variables is percent-encoded as defined in RFC 3986
+     *
+     * @var    boolean
+     * @since  __DEPLOY_VERSION__
+     */
+    protected bool $encodeQuery = false;
+
+    /**
      * Constructor.
      *
      * You can pass a URI string to the constructor to initialise a specific URI.
@@ -225,7 +233,9 @@ abstract class AbstractUri implements UriInterface
 
         // If the query is empty build it first
         if ($this->query === null) {
-            $this->query = static::buildQuery($this->vars);
+            $this->query = $this->encodeQuery
+                ? http_build_query($this->vars, '', '&', \PHP_QUERY_RFC3986)
+                : static::buildQuery($this->vars);
         }
 
         return $this->query;
@@ -330,6 +340,10 @@ abstract class AbstractUri implements UriInterface
     /**
      * Build a query from an array (reverse of the PHP parse_str()).
      *
+     * The names and values are not percent-encoded. A value containing a reserved character such as `&`, `=` or `#`
+     * therefore changes the structure of the URI. Relying on this is deprecated: as of 5.0 the query is
+     * percent-encoded as defined in RFC 3986. Use Uri::setQueryEncoding() to get the encoded query in 4.x.
+     *
      * @param   array  $params  The array of key => value pairs to return as a query string.
      *
      * @return  string  The resulting query string.
@@ -339,7 +353,20 @@ abstract class AbstractUri implements UriInterface
      */
     protected static function buildQuery(array $params)
     {
-        return urldecode(http_build_query($params, '', '&'));
+        $query = urldecode(http_build_query($params, '', '&'));
+
+        if ($query !== http_build_query($params, '', '&', \PHP_QUERY_RFC3986)) {
+            trigger_deprecation(
+                'joomla/uri',
+                '__DEPLOY_VERSION__',
+                'Building a query string with unencoded values is deprecated, as of 5.0 the query will be'
+                . ' percent-encoded as defined in RFC 3986. Call %s::setQueryEncoding(true) to switch to the new'
+                . ' behaviour.',
+                Uri::class
+            );
+        }
+
+        return $query;
     }
 
     /**
