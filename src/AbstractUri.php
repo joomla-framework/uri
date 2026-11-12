@@ -19,58 +19,58 @@ abstract class AbstractUri implements UriInterface
     /**
      * Original URI
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $uri;
+    protected ?string $uri = null;
 
     /**
      * Protocol
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $scheme;
+    protected ?string $scheme = null;
 
     /**
      * Host
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $host;
+    protected ?string $host = null;
 
     /**
      * Port
      *
-     * @var    integer
+     * @var    ?integer
      * @since  1.0
      */
-    protected $port;
+    protected ?int $port = null;
 
     /**
      * Username
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $user;
+    protected ?string $user = null;
 
     /**
      * Password
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $pass;
+    protected ?string $pass = null;
 
     /**
      * Path
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $path;
+    protected ?string $path = null;
 
     /**
      * Query
@@ -78,15 +78,15 @@ abstract class AbstractUri implements UriInterface
      * @var    ?string
      * @since  1.0
      */
-    protected $query;
+    protected ?string $query = null;
 
     /**
      * Anchor
      *
-     * @var    string
+     * @var    ?string
      * @since  1.0
      */
-    protected $fragment;
+    protected ?string $fragment = null;
 
     /**
      * Query variable hash
@@ -94,18 +94,18 @@ abstract class AbstractUri implements UriInterface
      * @var    array
      * @since  1.0
      */
-    protected $vars = [];
+    protected array $vars = [];
 
     /**
      * Constructor.
      *
      * You can pass a URI string to the constructor to initialise a specific URI.
      *
-     * @param   string  $uri  The optional URI string
+     * @param   ?string  $uri  The optional URI string
      *
      * @since   1.0
      */
-    public function __construct($uri = null)
+    public function __construct(?string $uri = null)
     {
         if ($uri !== null) {
             $this->parse($uri);
@@ -119,7 +119,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->toString();
     }
@@ -133,7 +133,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    public function toString($parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment'])
+    public function toString(array $parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment']): string
     {
         $bitmask = 0;
 
@@ -157,7 +157,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.2.0
      */
-    public function render($parts = self::ALL)
+    public function render(int $parts = self::ALL): string
     {
         // Make sure the query is created
         $query = $this->getQuery();
@@ -184,7 +184,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    public function hasVar($name)
+    public function hasVar(string $name): bool
     {
         return array_key_exists($name, $this->vars);
     }
@@ -193,13 +193,13 @@ abstract class AbstractUri implements UriInterface
      * Returns a query variable by name.
      *
      * @param   string  $name     Name of the query variable to get.
-     * @param   string  $default  Default value to return if the variable is not set.
+     * @param   mixed   $default  Default value to return if the variable is not set.
      *
      * @return  mixed   Requested query variable if present otherwise the default value.
      *
      * @since   1.0
      */
-    public function getVar($name, $default = null)
+    public function getVar(string $name, mixed $default = null): mixed
     {
         if (array_key_exists($name, $this->vars)) {
             return $this->vars[$name];
@@ -217,7 +217,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    public function getQuery($toArray = false)
+    public function getQuery(bool $toArray = false): array|string
     {
         if ($toArray) {
             return $this->vars;
@@ -234,11 +234,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI scheme (protocol)
      *
-     * @return  string  The URI scheme.
+     * @return  ?string  The URI scheme, or null if no scheme was specified.
      *
      * @since   1.0
      */
-    public function getScheme()
+    public function getScheme(): ?string
     {
         return $this->scheme;
     }
@@ -246,11 +246,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI username
      *
-     * @return  string  The username, or null if no username was specified.
+     * @return  ?string  The username, or null if no username was specified.
      *
      * @since   1.0
      */
-    public function getUser()
+    public function getUser(): ?string
     {
         return $this->user;
     }
@@ -258,11 +258,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI password
      *
-     * @return  string  The password, or null if no password was specified.
+     * @return  ?string  The password, or null if no password was specified.
      *
      * @since   1.0
      */
-    public function getPass()
+    public function getPass(): ?string
     {
         return $this->pass;
     }
@@ -270,11 +270,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI host
      *
-     * @return  string  The hostname/IP or null if no hostname/IP was specified.
+     * @return  ?string  The hostname/IP or null if no hostname/IP was specified.
      *
      * @since   1.0
      */
-    public function getHost()
+    public function getHost(): ?string
     {
         return $this->host;
     }
@@ -282,11 +282,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI port
      *
-     * @return  integer  The port number, or null if no port was specified.
+     * @return  ?integer  The port number, or null if no port was specified.
      *
      * @since   1.0
      */
-    public function getPort()
+    public function getPort(): ?int
     {
         return $this->port;
     }
@@ -294,11 +294,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Gets the URI path string
      *
-     * @return  string  The URI path string.
+     * @return  ?string  The URI path string, or null if no path was specified.
      *
      * @since   1.0
      */
-    public function getPath()
+    public function getPath(): ?string
     {
         return $this->path;
     }
@@ -306,11 +306,11 @@ abstract class AbstractUri implements UriInterface
     /**
      * Get the URI anchor string
      *
-     * @return  string  The URI anchor string.
+     * @return  ?string  The URI anchor string, or null if no fragment was specified.
      *
      * @since   1.0
      */
-    public function getFragment()
+    public function getFragment(): ?string
     {
         return $this->fragment;
     }
@@ -322,7 +322,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    public function isSsl()
+    public function isSsl(): bool
     {
         return strtolower($this->getScheme()) === 'https';
     }
@@ -337,7 +337,7 @@ abstract class AbstractUri implements UriInterface
      * @see     parse_str()
      * @since   1.0
      */
-    protected static function buildQuery(array $params)
+    protected static function buildQuery(array $params): string
     {
         return urldecode(http_build_query($params, '', '&'));
     }
@@ -351,7 +351,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    protected function parse($uri)
+    protected function parse(string $uri): bool
     {
         // Set the original URI to fall back on
         $this->uri = $uri;
@@ -400,7 +400,7 @@ abstract class AbstractUri implements UriInterface
      *
      * @since   1.0
      */
-    protected function cleanPath($path)
+    protected function cleanPath(string $path): string
     {
         $path = explode('/', preg_replace('#(/+)#', '/', $path));
 

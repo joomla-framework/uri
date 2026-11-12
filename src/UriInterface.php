@@ -97,7 +97,7 @@ interface UriInterface
      *
      * @since   1.0
      */
-    public function __toString();
+    public function __toString(): string;
 
     /**
      * Returns full URI string.
@@ -108,7 +108,7 @@ interface UriInterface
      *
      * @since   1.0
      */
-    public function toString($parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment']);
+    public function toString(array $parts = ['scheme', 'user', 'pass', 'host', 'port', 'path', 'query', 'fragment']): string;
 
     /**
      * Checks if variable exists.
@@ -119,19 +119,19 @@ interface UriInterface
      *
      * @since   1.0
      */
-    public function hasVar($name);
+    public function hasVar(string $name): bool;
 
     /**
      * Returns a query variable by name.
      *
      * @param   string  $name     Name of the query variable to get.
-     * @param   string  $default  Default value to return if the variable is not set.
+     * @param   mixed   $default  Default value to return if the variable is not set.
      *
      * @return  mixed  Requested query variable if present otherwise the default value.
      *
      * @since   1.0
      */
-    public function getVar($name, $default = null);
+    public function getVar(string $name, mixed $default = null): mixed;
 
     /**
      * Returns flat query string.
@@ -142,70 +142,70 @@ interface UriInterface
      *
      * @since   1.0
      */
-    public function getQuery($toArray = false);
+    public function getQuery(bool $toArray = false): array|string;
 
     /**
      * Get the URI scheme (protocol)
      *
-     * @return  string  The URI scheme.
+     * @return  ?string  The URI scheme, or null if no scheme was specified.
      *
      * @since   1.0
      */
-    public function getScheme();
+    public function getScheme(): ?string;
 
     /**
      * Get the URI username
      *
-     * @return  string  The username, or null if no username was specified.
+     * @return  ?string  The username, or null if no username was specified.
      *
      * @since   1.0
      */
-    public function getUser();
+    public function getUser(): ?string;
 
     /**
      * Get the URI password
      *
-     * @return  string  The password, or null if no password was specified.
+     * @return  ?string  The password, or null if no password was specified.
      *
      * @since   1.0
      */
-    public function getPass();
+    public function getPass(): ?string;
 
     /**
      * Get the URI host
      *
-     * @return  string  The hostname/IP or null if no hostname/IP was specified.
+     * @return  ?string  The hostname/IP or null if no hostname/IP was specified.
      *
      * @since   1.0
      */
-    public function getHost();
+    public function getHost(): ?string;
 
     /**
      * Get the URI port
      *
-     * @return  integer  The port number, or null if no port was specified.
+     * @return  ?integer  The port number, or null if no port was specified.
      *
      * @since   1.0
      */
-    public function getPort();
+    public function getPort(): ?int;
 
     /**
      * Gets the URI path string
      *
-     * @return  string  The URI path string.
+     * @return  ?string  The URI path string, or null if no path was specified.
      *
      * @since   1.0
      */
-    public function getPath();
+    public function getPath(): ?string;
 
     /**
      * Get the URI anchor string
      *
-     * @return  string  The URI anchor string.
+     * @return  ?string  The URI anchor string, or null if no fragment was specified.
      *
      * @since   1.0
      */
-    public function getFragment();
+    public function getFragment(): ?string;
 
     /**
      * Checks whether the current URI is using HTTPS.
@@ -214,5 +214,5 @@ interface UriInterface
      *
      * @since   1.0
      */
-    public function isSsl();
+    public function isSsl(): bool;
 }

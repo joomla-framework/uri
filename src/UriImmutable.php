@@ -24,7 +24,7 @@ final class UriImmutable extends AbstractUri
      * @var    boolean
      * @since  1.0
      */
-    private $constructed = false;
+    private bool $constructed = false;
 
     /**
      * Prevent setting undeclared properties.
@@ -37,7 +37,7 @@ final class UriImmutable extends AbstractUri
      * @since   1.0
      * @throws  \BadMethodCallException
      */
-    public function __set($name, $value)
+    public function __set(string $name, mixed $value): void
     {
         throw new \BadMethodCallException('This is an immutable object');
     }
@@ -45,12 +45,12 @@ final class UriImmutable extends AbstractUri
     /**
      * This is a special constructor that prevents calling the __construct method again.
      *
-     * @param   string  $uri  The optional URI string
+     * @param   ?string  $uri  The optional URI string
      *
      * @since   1.0
      * @throws  \BadMethodCallException
      */
-    public function __construct($uri = null)
+    public function __construct(?string $uri = null)
     {
         if ($this->constructed === true) {
             throw new \BadMethodCallException('This is an immutable object');

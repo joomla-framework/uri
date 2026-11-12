@@ -24,12 +24,13 @@ class UriHelper
      * @param   string   $url        URL to parse
      * @param   integer  $component  Retrieve just a specific URL component
      *
-     * @return  array|boolean  Associative array or false if badly formed URL.
+     * @return  array|string|integer|false|null  Associative array or false if badly formed URL. If $component is
+     *                                           given, the component (null if absent) like PHP's parse_url().
      *
      * @link    https://www.php.net/manual/en/function.parse-url.php
      * @since   1.0
      */
-    public static function parse_url($url, $component = -1)
+    public static function parse_url(string $url, int $component = -1): array|string|int|false|null
     {
         $result = [];
 
