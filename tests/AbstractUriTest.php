@@ -211,4 +211,18 @@ class AbstractUriTest extends TestCase
             (new UriImmutable('http://someuser:somepass@www.example.com:80/path/file.html?var=value#fragment'))->isSsl()
         );
     }
+
+    public function testIsSslWithoutSchemeTriggersNoDeprecation()
+    {
+        set_error_handler(static function (int $errno, string $errstr): never {
+            throw new \ErrorException($errstr, 0, $errno);
+        });
+
+        try {
+            $this->assertFalse((new UriImmutable('/path/file.html'))->isSsl());
+            $this->assertFalse((new UriImmutable('//www.example.com/path/file.html'))->isSsl());
+        } finally {
+            restore_error_handler();
+        }
+    }
 }
