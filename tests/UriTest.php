@@ -8,6 +8,7 @@
 namespace Joomla\Uri\Tests;
 
 use Joomla\Uri\Uri;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -143,6 +144,28 @@ class UriTest extends TestCase
             'somevar=somevalue&test=true',
             $this->object->getQuery()
         );
+    }
+
+    public static function renderUserInfoAndEmptyPartsProvider(): \Generator
+    {
+        yield 'user without pass' => ['https://user@example.com/path', ['scheme', 'user', 'pass', 'host', 'path'], 'https://user@example.com/path'];
+        yield 'user, pass not requested' => ['https://user:pw@example.com/path', ['scheme', 'user', 'host', 'path'], 'https://user@example.com/path'];
+        yield 'pass without user' => ['https://:pw@example.com/path', ['scheme', 'user', 'pass', 'host', 'path'], 'https://:pw@example.com/path'];
+        yield 'pass 0' => ['https://user:0@example.com/path', ['scheme', 'user', 'pass', 'host', 'path'], 'https://user:0@example.com/path'];
+        yield 'port 0' => ['https://example.com:0/path', ['scheme', 'host', 'port', 'path'], 'https://example.com:0/path'];
+        yield 'query 0' => ['https://example.com/path?0', ['scheme', 'host', 'path', 'query'], 'https://example.com/path?0'];
+        yield 'fragment 0' => ['https://example.com/path#0', ['scheme', 'host', 'path', 'fragment'], 'https://example.com/path#0'];
+    }
+
+    #[DataProvider('renderUserInfoAndEmptyPartsProvider')]
+    public function testRenderUserInfoAndEmptyParts(string $uri, array $parts, string $expected)
+    {
+        $this->assertSame($expected, (new Uri($uri))->toString($parts));
+    }
+
+    public function testRenderPassSetWithoutUser()
+    {
+        $this->assertSame('https://:secret@example.com/path', (string) (new Uri('https://example.com/path'))->setPass('secret'));
     }
 
     public function testSetScheme()
