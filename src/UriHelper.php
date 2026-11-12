@@ -24,7 +24,8 @@ class UriHelper
      * @param   string   $url        URL to parse
      * @param   integer  $component  Retrieve just a specific URL component
      *
-     * @return  array|boolean  Associative array or false if badly formed URL.
+     * @return  array|string|integer|boolean|null  Associative array or false if badly formed URL. If $component is
+     *                                             given, the component (null if absent) like PHP's parse_url().
      *
      * @link    https://www.php.net/manual/en/function.parse-url.php
      * @since   1.0
@@ -64,7 +65,18 @@ class UriHelper
         // Encode the URL (so UTF-8 chars are encoded), revert the encoding in the reserved uri characters and parse the url.
         $parts = parse_url(strtr(urlencode($url), $reservedUriCharactersMap), $component);
 
-        // With a well formed url decode the url (so UTF-8 chars are decoded).
-        return $parts ? array_map('urldecode', $parts) : $parts;
+        // With a well formed url decode the url (so UTF-8 chars are decoded). The port is an integer and is kept as is.
+        if (\is_array($parts)) {
+            foreach ($parts as $key => $value) {
+                if ($key !== 'port') {
+                    $parts[$key] = urldecode($value);
+                }
+            }
+
+            return $parts;
+        }
+
+        // A single component was requested
+        return \is_string($parts) ? urldecode($parts) : $parts;
     }
 }
